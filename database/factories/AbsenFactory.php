@@ -19,7 +19,7 @@ class AbsenFactory extends Factory
         return [
             'id_karyawan'=> 1,
             'bukti' => 'blank.jpg',
-            'lokasi' => 'POINT(0 0)',
+            'lokasi' => '1.111111, 1.111111',
         ];
     }
 }

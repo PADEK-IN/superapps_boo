@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_karyawan')->constrained(table:'karyawans', indexName:'absens_id_karyawan');
             $table->string('bukti', 100);
-            $table->point('lokasi');
+            $table->string('lokasi', 100);
             $table->enum('status', ['disetujui', 'tertunda', 'ditolak'])->default('tertunda');
             $table->timestamps();
         });

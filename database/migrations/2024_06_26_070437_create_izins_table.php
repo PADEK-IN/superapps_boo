@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('izins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_karyawan')->constrained(table:'karyawans', indexName:'izins_id_karyawan');
-            $table->enum('keterangan', ['izin', 'cuti']);
+            $table->enum('keterangan', ['sakit', 'cuti']);
             $table->string('alasan', 150);
             $table->date('mulai');
             $table->date('selesai');

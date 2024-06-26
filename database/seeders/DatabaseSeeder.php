@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Izin;
 use App\Models\User;
+use App\Models\Absen;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Karyawan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Karyawan::factory(3)->create();
+        Absen::factory(3)->create();
+        Izin::factory(3)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
     }
 }
