@@ -17,7 +17,9 @@ class AbsenFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id_karyawan'=> 1,
+            'bukti' => 'blank.jpg',
+            'lokasi' => 'POINT(0 0)',
         ];
     }
 }

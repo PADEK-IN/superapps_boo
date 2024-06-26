@@ -17,7 +17,11 @@ class IzinFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'id_karyawan' => 1,
+            'keterangan' => 'sakit',
+            'alasan' => fake()->sentence(10),
+            'mulai' => '2024-07-26',
+            'selesai' => '2024-07-29',
         ];
     }
 }

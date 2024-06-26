@@ -17,7 +17,15 @@ class KaryawanFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nik' => fake()->randomNumber(16),
+            'nama' => fake()->name('male'),
+            'jenis_kelamin' => 'LK',
+            'no_hp' => fake()->e164PhoneNumber(),
+            'alamat' => fake()->streetAddress(),
+            'provinsi' => fake()->sentence(1),
+            'jabatan' => fake()->sentence(1),
+            'foto' => 'blank.jpg',
+            'id_user' => 1,
         ];
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('alasan', 150);
             $table->date('mulai');
             $table->date('selesai');
-            $table->enum('status', ['disetujui', 'tertunda', 'ditolak']);
+            $table->enum('status', ['disetujui', 'tertunda', 'ditolak'])->default('tertunda');
             $table->timestamps();
         });
     }

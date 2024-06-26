@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('jabatan', 20);
             $table->string('foto', 100)->default('profile.png');
             $table->foreignId('id_user')->constrained(table:'users', indexName:'karyawans_id_user');
-            $table->enum('status', ['aktif', 'cuti', 'keluar']);
+            $table->enum('status', ['aktif', 'cuti', 'keluar'])->default('aktif');
             $table->timestamps();
         });
     }
