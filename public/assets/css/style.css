@@ -1,6 +1,6 @@
 /*
 ==================================
-Table of content 
+Table of content
 ==================================
 
 1. Bootstrap default css
@@ -16,7 +16,7 @@ Table of content
 11. sidebar
 12. card
 13. swiper sliders
-14. list 
+14. list
 15. footer
 16. dark mode
 17. filter
@@ -10336,9 +10336,9 @@ fieldset:disabled .btn {
 }
 
 /*!
- Mobileux customize css starts here 
+ Mobileux customize css starts here
  * Mobileux v2 (https://maxartkiller.com/)
- * Copyright 2021 Maxartkiller 
+ * Copyright 2021 Maxartkiller
  */
 /* 2. variables are at top line 45 to merge colors with bootstrap */
 /* 3. utility */
@@ -11779,7 +11779,7 @@ main.has-header {
 }
 
 .sidebar-wrap .sidebar .nav .nav-item .nav-link > .icon {
-  padding:1rem;
+  padding: 1.5rem;
   margin-right: 15px;
 }
 
