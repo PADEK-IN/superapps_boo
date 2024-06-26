@@ -3953,7 +3953,7 @@ fieldset:disabled .btn {
 
 .nav-link {
   display: block;
-  padding: 1.5rem;
+  padding: 0.5rem 1rem;
   color: #7297f8;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
@@ -11478,7 +11478,6 @@ main.has-header {
 
 /* 10. avatar */
 .avatar {
-  /* padding: 1rem; */
   position: relative;
   display: inline-block;
   overflow: hidden;
@@ -11779,7 +11778,10 @@ main.has-header {
 }
 
 .sidebar-wrap .sidebar .nav .nav-item .nav-link > .icon {
+<<<<<<< HEAD
+=======
   padding: 1.5rem;
+>>>>>>> bd5ac5ff9540ffad32bf799f7e8670d0a7cfe4cb
   margin-right: 15px;
 }
 
@@ -12447,7 +12449,7 @@ main.has-header {
   width: 60px;
   line-height: 60px;
   border-radius: 30px;
-  padding: 1rem;
+  padding: 0;
   display: inline-block;
   margin: -30px auto 0 auto;
   text-align: center;
