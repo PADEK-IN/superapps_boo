@@ -7,12 +7,12 @@
                 <form method="POST" action="{{ route('login') }}" class="was-validated">
                     @csrf
                     <div class="form-floating mb-3">
-                        <x-text-input type="email" class="form-control" id="emailaddress" name="email" placeholder="Masukan Email Pegawai" :value="old('email')" required autofocus autocomplete="username" />
+                        <x-text-input type="email" id="emailaddress" name="email" placeholder="Masukan Email" :value="old('email')" required autofocus autocomplete="email" />
                         <x-input-label for="emailaddress" :value="__('Email')" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <div class="form-floating mb-3">
-                        <x-text-input type="password" class="form-control" id="password" name="password" placeholder="Masukan Password" required autocomplete="current-password" />
+                        <x-text-input type="password" id="password" name="password" placeholder="Masukan Password" required autocomplete="current-password" />
                         <x-input-label for="password" :value="__('Password')" />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="d-grid">
-            <span>Have an account? <a href="/register" class="mb-3">Sign Up</a></span>
+            <span>Don't have an account? <a href="/register" class="mb-3">Sign Up</a></span>
         </div>
     </div>
 </x-auth-layout>
