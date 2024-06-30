@@ -74,7 +74,7 @@
                     <div class="col-12">
                         <ul class="nav nav-pills">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">
+                                <a class="nav-link active" aria-current="page" href="/dashboard">
                                     <div class="avatar avatar-40 rounded icon"><i class="bi bi-house-door"></i></div>
                                     <div class="col">Dashboard</div>
                                     <div class="arrow"><i class="bi bi-arrow-right"></i></div>
@@ -84,78 +84,51 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                                     aria-expanded="false">
-                                    <div class="avatar avatar-40 rounded icon"><i class="bi bi-shop"></i></div>
-                                    <div class="col">Shop</div>
+                                    <div class="avatar avatar-40 rounded icon"><i class="bi bi-bell"></i></div>
+                                    <div class="col">Absen</div>
                                     <div class="arrow"><i class="bi bi-plus plus"></i> <i class="bi bi-dash minus"></i>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item nav-link active" href="#">
+                                    <li><a class="dropdown-item nav-link active" href="/absen/create">
                                             <div class="avatar avatar-40 rounded icon"><i class="bi bi-bag"></i></div>
-                                            <div class="col">Shop home</div>
+                                            <div class="col">Create</div>
                                             <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                                         </a></li>
-                                    <li><a class="dropdown-item nav-link" href="#">
+                                    <li><a class="dropdown-item nav-link" href="/absen">
                                             <div class="avatar avatar-40 rounded icon"><i class="bi bi-binoculars"></i>
                                             </div>
-                                            <div class="col">Product</div>
+                                            <div class="col">History</div>
                                             <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                                         </a></li>
-                                    <li><a class="dropdown-item nav-link" href="#">
-                                            <div class="avatar avatar-40 rounded icon"><i class="bi bi-basket3"></i></div>
-                                            <div class="col">Cart</div>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                    aria-expanded="false">
+                                    <div class="avatar avatar-40 rounded icon"><i class="bi bi-file-earmark-text"></i></div>
+                                    <div class="col">Izin</div>
+                                    <div class="arrow"><i class="bi bi-plus plus"></i> <i class="bi bi-dash minus"></i>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item nav-link active" href="/izin/create">
+                                            <div class="avatar avatar-40 rounded icon"><i class="bi bi-chat-text"></i></div>
+                                            <div class="col">Create</div>
                                             <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                                         </a></li>
-                                    <li><a class="dropdown-item nav-link" href="#">
-                                            <div class="avatar avatar-40 rounded icon"><i class="bi bi-credit-card"></i>
+                                    <li><a class="dropdown-item nav-link" href="/izin">
+                                            <div class="avatar avatar-40 rounded icon"><i class="bi bi-file"></i>
                                             </div>
-                                            <div class="col">Payment</div>
-                                            <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                                        </a></li>
-                                    <li><a class="dropdown-item nav-link" href="#">
-                                            <div class="avatar avatar-40 rounded icon"><i class="bi bi-box-seam"></i>
-                                            </div>
-                                            <div class="col">My Orders</div>
+                                            <div class="col">History</div>
                                             <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                                         </a></li>
                                 </ul>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#" tabindex="-1">
-                                    <div class="avatar avatar-40 rounded icon"><i class="bi bi-chat-text"></i></div>
-                                    <div class="col">Messages</div>
-                                    <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" tabindex="-1">
-                                    <div class="avatar avatar-40 rounded icon"><i class="bi bi-bell"></i></div>
-                                    <div class="col">Notification</div>
-                                    <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" tabindex="-1">
-                                    <div class="avatar avatar-40 rounded icon"><i class="bi bi-gear"></i></div>
-                                    <div class="col">Settings</div>
-                                    <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" tabindex="-1">
-                                    <div class="avatar avatar-40 rounded icon"><i class="bi bi-file-earmark-text"></i>
-                                    </div>
-                                    <div class="col">Pages <span class="badge bg-info fw-light">new</span></div>
-                                    <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" tabindex="-1">
+                                <a class="nav-link" href="/logout" tabindex="-1">
                                     <div class="avatar avatar-40 rounded icon"><i class="bi bi-box-arrow-right"></i></div>
                                     <div class="col">Logout</div>
                                     <div class="arrow"><i class="bi bi-arrow-right"></i></div>
@@ -217,26 +190,26 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/absen">
                             <div>
                                 <i class="nav-icon bi bi-bar-chart-line"></i>
-                                <span class="nav-text">Stats</span>
+                                <span class="nav-text">Absen</span>
                             </div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/izin">
                             <div>
                                 <i class="nav-icon bi bi-sliders"></i>
-                                <span class="nav-text">Admin</span>
+                                <span class="nav-text">Izin</span>
                             </div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/profile">
                             <div>
                                 <i class="nav-icon bi bi-gear"></i>
-                                <span class="nav-text">Settings</span>
+                                <span class="nav-text">Profile</span>
                             </div>
                         </a>
                     </li>
