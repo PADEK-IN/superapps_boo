@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminIndexController;
 use App\Http\Controllers\AdminAbsenController;
 use App\Http\Controllers\AdminIzinController;
 use App\Http\Controllers\AdminKaryawanController;
+use App\Http\Controllers\AdminUserController;
 
 Route::prefix('admin')->middleware(['auth', 'verified', isValidAdmin::class])->group(function () {
     Route::get('/dashboard', [AdminIndexController::class, 'index'])->name('admin.dashboard');
@@ -16,7 +17,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', isValidAdmin::class])->g
 
     Route::get('/izin', [AdminIzinController::class, 'listPage'])->name('admin.izin');
 
-    Route::get('/user', [AdminIndexController::class, 'index'])->name('admin.user');
+    Route::get('/user', [AdminUserController::class, 'listPage'])->name('admin.user');
 
 
 });
