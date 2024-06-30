@@ -39,7 +39,7 @@
 <body class="body-scroll d-flex flex-column h-100 dark-bg bg1" data-page="signin">
 
     <!-- loader section -->
-    {{-- <div class="container-fluid loader-wrap">
+    <div class="container-fluid loader-wrap">
         <div class="row h-100">
             <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
                 <div class="loader-cube-wrap mx-auto">
@@ -51,7 +51,7 @@
                 <p>Let's Create Difference<br><strong>Please wait...</strong></p>
             </div>
         </div>
-    </div> --}}
+    </div>
     <!-- loader section ends -->
 
     <!-- Begin page content -->
