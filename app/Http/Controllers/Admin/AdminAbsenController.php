@@ -11,4 +11,9 @@ class AdminAbsenController extends Controller
     {
         return view('pages.admin.absen.list');
     }
+
+    public function requestPage()
+    {
+        return view('pages.admin.absen.requestList');
+    }
 }
