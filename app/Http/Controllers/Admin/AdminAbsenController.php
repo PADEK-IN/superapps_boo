@@ -10,7 +10,7 @@ class AdminAbsenController extends Controller
 {
     public function listPage()
     {
-        $absens = Absen::all()->orderBy('created_at', 'desc')->get();
+        $absens = Absen::orderBy('created_at', 'desc')->get();
         return view('pages.admin.absen.list', compact('absens'));
     }
 
