@@ -24,6 +24,11 @@ class isValidKaryawan
         }
 
         // Lanjutkan dengan logika middleware kustom
+        if ($user->email_verified_at === null) {
+            return redirect()->route('logout');
+        }
+
+        // Lanjutkan dengan logika middleware kustom
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
