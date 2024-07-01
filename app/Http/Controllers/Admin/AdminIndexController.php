@@ -11,19 +11,13 @@ class AdminIndexController extends Controller
 {
     public function index()
     {
-        // // total karyawan aktif
-        // $countKaryawanAktif = Karyawan::where('status', 'aktif')->count();
-        // // total karyawan izin sakit
-        // $countKaryawanIzinSakit = Izin::where('keterangan', 'sakit')->count();
-        // // total karyawan izin cuti
-        // $countKaryawanIzinCuti = Izin::where('keterangan', 'cuti')->count();
+        // total karyawan aktif
+        $countKaryawanAktif = Karyawan::where('status', 'aktif')->count();
+        // total karyawan izin sakit
+        $countKaryawanIzinSakit = Izin::where('keterangan', 'sakit')->count();
+        // total karyawan izin cuti
+        $countKaryawanIzinCuti = Izin::where('keterangan', 'cuti')->count();
 
-        // class count {
-        //     public $karyawanAktif;
-        //     public $karyawanIzinSakit;
-        //     public $karyawanIzinCuti;
-        // }
-
-        return view('pages.admin.dashboard.index');
+        return view('pages.admin.dashboard.index', compact('countKaryawanAktif', 'countKaryawanIzinSakit', 'countKaryawanIzinCuti'));
     }
 }
