@@ -34,6 +34,9 @@
 
         <!-- style css for this template -->
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" id="style">
+
+        <!-- Webcam.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
     </head>
 
     <body class="body-scroll" data-page="stats">
@@ -193,7 +196,7 @@
                         <a class="nav-link" href="/absen">
                             <div>
                                 <i class="nav-icon bi bi-bar-chart-line"></i>
-                                <span class="nav-text">Absen</span>
+                                <span class="nav-text">Absensi</span>
                             </div>
                         </a>
                     </li>
@@ -201,7 +204,7 @@
                         <a class="nav-link" href="/izin">
                             <div>
                                 <i class="nav-icon bi bi-sliders"></i>
-                                <span class="nav-text">Izin</span>
+                                <span class="nav-text">Perizinan</span>
                             </div>
                         </a>
                     </li>

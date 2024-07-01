@@ -1,5 +1,6 @@
 <x-karyawan-layout>
-    <h3 class="mb-5 text-center">List Absensi</h3>
+    <h3 class="mb-2 text-center">List History Absensi</h3>
+    <a href="/absen/create" class="btn-login btn btn-lg btn-default shadow-sm mb-5">Buat Absen</a>
     <!-- main page content -->
     <div class="main-container container top-20">
         <!-- Chat list   -->
