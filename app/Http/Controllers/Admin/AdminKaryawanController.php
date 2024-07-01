@@ -10,18 +10,18 @@ class AdminKaryawanController extends Controller
 {
     public function listPage()
     {
-        $karayawans = Karyawan::orderBy('created_at', 'desc')->get();
-        return view('pages.admin.karyawan.list', compact('karayawans'));
+        $karyawans = Karyawan::orderBy('created_at', 'desc')->get();
+        return view('pages.admin.karyawan.list', compact('karyawans'));
     }
 
     public function pendingPage()
     {
-        $karayawans = Karyawan::with('user')
+        $karyawans = Karyawan::with('user')
                                 ->whereHas('user', function ($query) {
                                     $query->whereNull('email_verified_at');
                                 })
                                 ->orderBy('created_at', 'desc')
                                 ->get();
-        return view('pages.admin.karyawan.pendingList', compact('karayawans'));
+        return view('pages.admin.karyawan.pendingList', compact('karyawans'));
     }
 }
