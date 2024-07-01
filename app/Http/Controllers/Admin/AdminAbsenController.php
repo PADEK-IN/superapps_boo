@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Absen;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -9,11 +10,13 @@ class AdminAbsenController extends Controller
 {
     public function listPage()
     {
-        return view('pages.admin.absen.list');
+        $absens = Absen::all()->orderBy('created_at', 'desc')->get();
+        return view('pages.admin.absen.list', compact('absens'));
     }
 
     public function requestPage()
     {
-        return view('pages.admin.absen.requestList');
+        $absens = Absen::where('status', 'tertunda')->orderBy('created_at', 'desc')->get();
+        return view('pages.admin.absen.requestList', compact('absens'));
     }
 }
