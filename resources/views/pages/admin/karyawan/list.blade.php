@@ -50,7 +50,23 @@
                                 <td>08263728123</td>
                                 <td>Direktur</td>
                                 <td>
-                                    <span class="badge bg-success">Active</span>
+                                    <span class="badge bg-warning">Cuti</span>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4267384249</td>
+                                <td>Putri Wulandari</td>
+                                <td>
+                                    <span class="badge bg-warning">Perempuan</span>
+                                </td>
+                                <td>08263728123</td>
+                                <td>Direktur</td>
+                                <td>
+                                    <span class="badge bg-danger">Keluar</span>
                                 </td>
                                 <td>
                                     <a href="#" class="btn btn-sm btn-primary">Edit</a>
