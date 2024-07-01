@@ -51,25 +51,25 @@
                             {{-- User List --}}
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#user-sidebar" aria-expanded="false" aria-controls="user-sidebar">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user fa-fw"></i></div>
-                                List User 
+                                List User
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="user-sidebar" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/admin/karyawan">Semua Karyawan</a>
-                                    <a class="nav-link" href="#">Karyawan Panding</a>
+                                    <a class="nav-link" href="/admin/karyawan/pending">Karyawan Panding</a>
                                 </nav>
                             </div>
                             {{-- Absensi List --}}
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#absensi-sidebar" aria-expanded="false" aria-controls="absensi-sidebar">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                List Absensi 
+                                List Absensi
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="absensi-sidebar" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/admin/absen">History Absesnsi</a>
-                                    <a class="nav-link" href="#">Requset Absensi</a>
+                                    <a class="nav-link" href="/admin/absen/request">Requset Absensi</a>
                                 </nav>
                             </div>
                             {{-- Perizinan List --}}
@@ -81,7 +81,7 @@
                             <div class="collapse" id="perizinan-sidebar" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/admin/izin">Karyawan Izin</a>
-                                    <a class="nav-link" href="#">Request Izin</a>
+                                    <a class="nav-link" href="/admin/izin/request">Request Izin</a>
                                 </nav>
                             </div>
                             <a class="nav-link" href="#">
@@ -95,9 +95,9 @@
             {{-- Content --}}
             <div id="layoutSidenav_content">
                 {{ $slot }}
-            </div> 
+            </div>
         </div>
-        
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{ asset('assets/admin/js/scripts.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

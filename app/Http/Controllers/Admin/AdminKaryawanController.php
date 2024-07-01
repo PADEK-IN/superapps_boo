@@ -11,4 +11,9 @@ class AdminKaryawanController extends Controller
     {
         return view('pages.admin.karyawan.list');
     }
+
+    public function pendingPage()
+    {
+        return view('pages.admin.karyawan.pendingList');
+    }
 }
