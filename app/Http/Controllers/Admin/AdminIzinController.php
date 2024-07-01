@@ -11,4 +11,9 @@ class AdminIzinController extends Controller
     {
         return view('pages.admin.izin.list');
     }
+
+    public function requestPage()
+    {
+        return view('pages.admin.izin.requestList');
+    }
 }
