@@ -114,8 +114,13 @@
 
         let marker = L.marker([0, 0]).addTo(map);
 
-        let allowedLocation = L.latLng(-1.6158346,103.5905513); // Ganti dengan koordinat lokasi yang diizinkan
+        let allowedLocation = L.latLng(-6.1679125,106.729336); // Ganti dengan koordinat lokasi yang diizinkan
         let maxDistance = 1000; // dalam meter, misal 1km
+
+        // Add a marker and circle for the allowed location
+        let allowedMarker = L.marker(allowedLocation).addTo(map)
+            .bindPopup('Lokasi yang diizinkan').openPopup();
+        L.circle(allowedLocation, { radius: maxDistance }).addTo(map);
 
         function onLocationFound(e) {
             let radius = e.accuracy / 2;
