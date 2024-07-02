@@ -136,10 +136,10 @@
 
             if (distance <= maxDistance) {
                 document.getElementById('submit-button').removeAttribute('disabled');
-                document.getElementById('distance-info').innerText = 'Jarak: ' + distance.toFixed(2) + ' meter dari lokasi yang diizinkan';
+                document.getElementById('distance-info').innerHTML = '<span class="text-success">Jarak: ' + distance.toFixed(2) + ' meter dari lokasi yang diizinkan</span>';
             } else {
                 document.getElementById('submit-button').setAttribute('disabled', 'disabled');
-                document.getElementById('distance-info').innerText = 'Jarak: Lebih dari ' + (maxDistance/1000) + ' KM dari lokasi yang diizinkan';
+                document.getElementById('distance-info').innerHTML = '<span class="text-danger">Jarak Lebih dari ' + (maxDistance/1000) + ' KM dari lokasi yang diizinkan</span>';
                 alert('Anda harus berada di lokasi yang diizinkan untuk melakukan absen.');
             }
         }
