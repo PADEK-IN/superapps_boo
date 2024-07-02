@@ -12,7 +12,6 @@
                     <div class="form-floating mb-3">
                         <x-text-input type="password" id="password" name="password" placeholder="Masukan Password" required autocomplete="current-password" />
                         <x-input-label for="password" :value="__('Password')" />
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
                     <div class="d-grid">

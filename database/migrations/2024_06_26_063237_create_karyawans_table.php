@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('nama', 50);
             $table->enum('jenis_kelamin', ['LK', 'PR']);
             $table->string('no_hp', 18);
-            $table->string('alamat', 150);
-            $table->string('provinsi', 25);
-            $table->string('jabatan', 20);
+            $table->string('alamat', 150)->nullable();
+            $table->string('provinsi', 25)->nullable();
+            $table->string('jabatan', 20)->nullable();
             $table->string('foto', 100)->default('profile.png');
             $table->foreignId('id_user')->constrained(table:'users', indexName:'karyawans_id_user');
             $table->enum('status', ['aktif', 'cuti', 'keluar'])->default('aktif');

@@ -8,7 +8,6 @@
                     <div class="form-floating mb-3">
                         <x-text-input type="email" id="emailaddress" name="email" placeholder="Masukan Email" :value="old('email')" required autocomplete="username" />
                         <x-input-label for="emailaddress" :value="__('Email')" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <div class="form-floating mb-3">
                         <x-text-input type="password" id="password" name="password" placeholder="Masukan Password" required autocomplete="new-password" />
@@ -17,10 +16,6 @@
                     <div class="form-floating mb-3">
                         <x-text-input type="password" id="password_confirmation" name="password_confirmation" placeholder="Masukan Konfirmasi Password" required autocomplete="new-password" />
                         <x-input-label for="password" :value="__('Confirm Password')" />
-                    </div>
-                    <div class="form-floating mb-3">
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
                     <div class="d-grid">
                         <x-primary-button>{{ __('Sign Up') }}</x-primary-button>
