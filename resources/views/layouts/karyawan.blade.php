@@ -70,15 +70,15 @@
                         </figure>
                     </div>
                     <div class="col align-self-center ps-0">
-                        <h6 class="mb-0">Selvy Smith</h6>
-                        <p class="text-opac">Australia, UK</p>
+                        <h6 class="mb-0">{{ Auth::user()->email }}</h6>
+                        <p class="text-opac">{{ ucwords(Auth::user()->role) }}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <ul class="nav nav-pills">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="/dashboard">
+                                <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page" href="/dashboard">
                                     <div class="avatar avatar-40 rounded icon"><i class="bi bi-house-door"></i></div>
                                     <div class="col">Dashboard</div>
                                     <div class="arrow"><i class="bi bi-arrow-right"></i></div>
@@ -94,12 +94,12 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item nav-link active" href="/absen/create">
+                                    <li><a class="dropdown-item nav-link {{ Request::is('abseen.create') ? 'active' : '' }}" href="/absen/create">
                                             <div class="avatar avatar-40 rounded icon"><i class="bi bi-bag"></i></div>
                                             <div class="col">Create</div>
                                             <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                                         </a></li>
-                                    <li><a class="dropdown-item nav-link" href="/absen">
+                                    <li><a class="dropdown-item nav-link {{ Request::is('absen') ? 'active' : '' }}" href="/absen">
                                             <div class="avatar avatar-40 rounded icon"><i class="bi bi-binoculars"></i>
                                             </div>
                                             <div class="col">History</div>
@@ -117,14 +117,13 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item nav-link active" href="/izin/create">
+                                    <li><a class="dropdown-item nav-link {{ Request::is('izin.create') ? 'active' : '' }}" href="/izin/create">
                                             <div class="avatar avatar-40 rounded icon"><i class="bi bi-chat-text"></i></div>
                                             <div class="col">Create</div>
                                             <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                                         </a></li>
-                                    <li><a class="dropdown-item nav-link" href="/izin">
-                                            <div class="avatar avatar-40 rounded icon"><i class="bi bi-file"></i>
-                                            </div>
+                                    <li><a class="dropdown-item nav-link {{ Request::is('izin') ? 'active' : '' }}" href="/izin">
+                                            <div class="avatar avatar-40 rounded icon"><i class="bi bi-file"></i></div>
                                             <div class="col">History</div>
                                             <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                                         </a></li>
@@ -186,7 +185,7 @@
             <div class="container">
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/">
+                        <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="/dashboard">
                             <div>
                                 <i class="nav-icon bi bi-house"></i>
                                 <span class="nav-text">Home</span>
@@ -194,7 +193,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/absen">
+                        <a class="nav-link {{ Request::is('absen') ? 'active' : '' }}" href="/absen">
                             <div>
                                 <i class="nav-icon bi bi-bar-chart-line"></i>
                                 <span class="nav-text">Absensi</span>
@@ -202,17 +201,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/izin">
+                        <a class="nav-link {{ Request::is('izin') ? 'active' : '' }}" href="/izin">
                             <div>
-                                <i class="nav-icon bi bi-sliders"></i>
+                                <i class="nav-icon bi bi-file-earmark-text"></i>
                                 <span class="nav-text">Perizinan</span>
                             </div>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">
+                        <a class="nav-link {{ Request::is('profile') ? 'active' : '' }}" href="/profile">
                             <div>
-                                <i class="nav-icon bi bi-gear"></i>
+                                <i class="nav-icon bi bi-person-circle"></i>
                                 <span class="nav-text">Profile</span>
                             </div>
                         </a>
