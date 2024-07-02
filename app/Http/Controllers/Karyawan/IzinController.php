@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Karyawan;
 use App\Models\Izin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class IzinController extends Controller
 {
@@ -25,12 +26,16 @@ class IzinController extends Controller
             'keterangan' => 'required',
             'alasan' => 'required',
             'mulai' => 'required',
-            'sampai' => 'required',
+            'selesai' => 'required|date|after_or_equal:mulai',
             'status' => 'required',
         ]);
 
-        Izin::create($request->all());
+        $id_karyawan = Auth::user()->id;
 
-        return redirect()->route('karyawan.izin.list');
+        $data = array_merge($request->all(), ['id_karyawan' => $id_karyawan]);
+
+        Izin::create($data);
+
+        return redirect()->route('pages.karyawan.izin.list');
     }
 }
