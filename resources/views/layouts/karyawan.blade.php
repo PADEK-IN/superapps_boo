@@ -32,6 +32,9 @@
         <!-- swiper css -->
         <link rel="stylesheet" href="{{ asset('assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css') }}">
 
+        <!-- izitoast css -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+
         <!-- style css for this template -->
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" id="style">
 
@@ -246,6 +249,38 @@
 
         <!-- page level custom script -->
         <script src="{{ asset('assets/js/app.js') }}"></script>
+
+        {{-- toast --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function showToast(type, title, message) {
+                    iziToast[type]({
+                        title: title,
+                        message: message,
+                        position: 'bottomRight'
+                    });
+                }
+
+                @if(session('status'))
+                    showToast('success', 'Success', '{{ session('status') }}');
+                @endif
+
+                @if(session('success'))
+                    showToast('success', 'Success', '{{ session('success') }}');
+                @endif
+
+                @if(session('error'))
+                    showToast('error', 'Error', '{{ session('error') }}');
+                @endif
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        showToast('error', 'Error', '{{ $error }}');
+                    @endforeach
+                @endif
+            });
+        </script>
 
     </body>
 

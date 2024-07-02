@@ -111,5 +111,36 @@
         <script src="{{ asset('assets/admin/assets/demo/chart-area-demo.js') }}assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{{ asset('assets/admin/js/datatables-simple-demo.js') }}"></script>
+        {{-- Toast --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function showToast(type, title, message) {
+                    iziToast[type]({
+                        title: title,
+                        message: message,
+                        position: 'bottomRight'
+                    });
+                }
+
+                @if(session('status'))
+                    showToast('success', 'Success', '{{ session('status') }}');
+                @endif
+
+                @if(session('success'))
+                    showToast('success', 'Success', '{{ session('success') }}');
+                @endif
+
+                @if(session('error'))
+                    showToast('error', 'Error', '{{ session('error') }}');
+                @endif
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        showToast('error', 'Error', '{{ $error }}');
+                    @endforeach
+                @endif
+            });
+        </script>
     </body>
 </html>

@@ -29,28 +29,26 @@ class IzinController extends Controller
             'alasan' => 'required',
             'mulai' => 'required|date',
             'selesai' => 'required|date|after_or_equal:mulai',
-            'status' => 'required',
         ]);
         try {
             // Ambil ID karyawan dari user yang sedang login
-            $id_user = Auth::user()->id;
+            $id_user = Auth::id();
             $karyawan = Karyawan::where('id_user', $id_user)->firstOrFail();
             $id_karyawan = $karyawan->id;
 
             // Gabungkan data request dengan ID karyawan
-            // $data = array_merge($request->all(), ['id_karyawan' => $id_karyawan]);
-            // dd($data);
-            // Izin::create($data);
+            $data = array_merge($request->all(), ['id_karyawan' => $id_karyawan]);
 
-            // return redirect()->route('izin');
-            return redirect()->intended(route('izin', absolute: false));
+            Izin::create($data);
+
+            return redirect()->route('izin')->with('success', 'Data berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->back()
             ->with('error', 'Server error, gagal menambahkan data.')
             ->withInput();
         }
 
-        
+
     }
 
 }

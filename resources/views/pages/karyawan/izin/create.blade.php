@@ -18,45 +18,36 @@
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="form-group form-floating">
                             <select class="form-control" id="keterangan" name="keterangan" required>
-                                <option value="sakit">Sakit</option>
-                                <option value="cuti">Cuti</option>
+                                <option disabled {{ old('keterangan')?'':'selected' }}>Pilih Keterangan</option>
+                                <option value="sakit" {{ old('keterangan') == 'sakit'?'selected':'' }}>Sakit</option>
+                                <option value="cuti" {{ old('keterangan') == 'cuti'?'selected':'' }}>Cuti</option>
                             </select>
                             <label class="form-control-label" for="keterangan">Keterangan</label>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="form-group form-floating">
-                            <input type="date" class="form-control" id="mulai" name="mulai" required>
+                            <input type="date" class="form-control" id="mulai" name="mulai" :value="old('mulai')" required>
                             <label class="form-control-label" for="mulai">Waktu Mulai</label>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="form-group form-floating">
-                            <input type="date" class="form-control" id="selesai" name="selesai" required>
+                            <input type="date" class="form-control" id="selesai" name="selesai" :value="old('selesai')" required>
                             <label class="form-control-label" for="selesai">Waktu Selesai</label>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="form-group form-floating">
-                            <input type="text" class="form-control" id="alasan" name="alasan" placeholder="Alasan" required>
+                            <input type="text" class="form-control" id="alasan" name="alasan" placeholder="Alasan" :value="old('alasan')" required>
                             <label class="form-control-label" for="alasan">Alasan</label>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 mb-3">
-                        <div class="form-group form-floating">
-                            <select class="form-control" id="status" name="status" required>
-                                <option value="tertunda">Tertunda</option>
-                                <option value="disetujui">Disetujui</option>
-                                <option value="ditolak">Ditolak</option>
-                            </select>
-                            <label class="form-control-label" for="status">Status</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">
                         <x-primary-button>Submit</x-primary-button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
