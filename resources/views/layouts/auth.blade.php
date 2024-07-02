@@ -32,8 +32,12 @@
         <!-- swiper css -->
         <link rel="stylesheet" href="{{ asset('assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css') }}">
 
+        <!-- izitoast css -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+
         <!-- style css for this template -->
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" id="style">
+
     </head>
 
     <body class="body-scroll d-flex flex-column h-100 dark-bg bg1" data-page="signin">
@@ -82,7 +86,7 @@
             </div>
         </main>
 
-
+        {{-- <x-alert /> --}}
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -112,6 +116,35 @@
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function showToast(type, title, message) {
+                    iziToast[type]({
+                        title: title,
+                        message: message,
+                        position: 'bottomRight'
+                    });
+                }
+
+                @if(session('status'))
+                    showToast('success', 'Success', '{{ session('status') }}');
+                @endif
+
+                @if(session('success'))
+                    showToast('success', 'Success', '{{ session('success') }}');
+                @endif
+
+                @if(session('error'))
+                    showToast('error', 'Error', '{{ session('error') }}');
+                @endif
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        showToast('error', 'Error', '{{ $error }}');
+                    @endforeach
+                @endif
+            });
+        </script>
     </body>
 
 </html>

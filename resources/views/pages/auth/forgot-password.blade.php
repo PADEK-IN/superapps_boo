@@ -4,7 +4,7 @@
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+        {{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
         <div class="card card-light shadow-sm mb-4">
             <div class="card-body">
                 <form method="POST" action="{{ route('password.email') }}">
@@ -13,7 +13,6 @@
                     <div class="form-floating mb-3">
                         <x-text-input type="email" id="emailaddress" name="email" placeholder="Masukan Email" :value="old('email')" required autofocus />
                         <x-input-label for="emailaddress" :value="__('Email')" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
                     <div class="d-grid">

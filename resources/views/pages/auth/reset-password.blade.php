@@ -11,22 +11,19 @@
                     <!-- Email Address -->
                     <div class="form-floating mb-3">
                         <x-text-input type="email" id="emailaddress" name="email" placeholder="Masukan Email" :value="old('email', $request->email)" required autocomplete="username" />
-                        <x-input-label for="emailaddress" :value="__('Email')" />
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <x-input-label for="emailaddress" :value="__('Email')" />=
                     </div>
 
                     <!-- Password -->
                     <div class="form-floating mb-3">
                         <x-text-input type="password" id="password" name="password" placeholder="Masukan Password" required autocomplete="new-password" />
                         <x-input-label for="password" :value="__('Password')" />
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
                     <!-- Confirm Password -->
                     <div class="form-floating mb-3">
                         <x-text-input type="password" id="password" name="password" placeholder="Masukan Konfirmasi Password" required autocomplete="new-password" />
                         <x-input-label for="password" :value="__('Confirm Password')" />
-                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
 
                     <div class="d-grid">
