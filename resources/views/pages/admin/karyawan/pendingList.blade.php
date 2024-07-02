@@ -36,6 +36,7 @@
                                 </td>
                                 <td>
                                     <input type="checkbox">
+                                    <a href="#" class="btn btn-sm btn-info">Accept</a>
                                 </td>
                             </tr>
                             <tr>
@@ -50,6 +51,7 @@
                                 </td>
                                 <td>
                                     <input type="checkbox">
+                                    <a href="#" class="btn btn-sm btn-info">Accept</a>
                                 </td>
                             </tr>
                         </tbody>
