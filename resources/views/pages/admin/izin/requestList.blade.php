@@ -16,11 +16,11 @@
                         <thead>
                             <tr>
                                 <th>Nama</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Jabatan</th>
-                                <th>Jarak</th>
-                                <th>Longitude</th>
-                                <th>Latitude</th>
+                                <th>Keterangan</th>
+                                <th>Alasan</th>
+                                <th>Mulai</th>
+                                <th>Sampai</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -28,14 +28,14 @@
                             <tr>
                                 <td>Joko Widodo</td>
                                 <td>
-                                    <span class="badge bg-primary">Laki-laki</span>
+                                    <span class="badge bg-primary">Sakit</span>
                                 </td>
-                                <td>Direktur</td>
+                                <td>Masuk Angin</td>
+                                <td>22-Januari-2020</td>
+                                <td>22-Januari-2020</td>
                                 <td>
-                                    <span class="badge bg-info">At Location</span>
+                                    <span class="badge bg-dark">Tertunda</span>
                                 </td>
-                                <td>110.3658812</td>
-                                <td>-7.7925927</td>
                                 <td>
                                     <input type="checkbox">
                                     <a href="#" class="btn btn-sm btn-info">Acept</a>
@@ -44,14 +44,30 @@
                             <tr>
                                 <td>Putri Wulandari</td>
                                 <td>
-                                    <span class="badge bg-warning">Perempuan</span>
+                                    <span class="badge bg-warning">Cuti</span>
                                 </td>
-                                <td>Direktur</td>
+                                <td>Pulang Kampung</td>
+                                <td>22-Januari-2020</td>
+                                <td>22-Januari-2020</td>
                                 <td>
-                                    <span class="badge bg-danger">3KM</span>
+                                    <span class="badge bg-dark">Tertunda</span>
                                 </td>
-                                <td>110.3658812</td>
-                                <td>-7.7925927</td>
+                                <td>
+                                    <input type="checkbox">
+                                    <a href="#" class="btn btn-sm btn-info">Acept</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Putri Wulandari</td>
+                                <td>
+                                    <span class="badge bg-primary">Sakit</span>
+                                </td>
+                                <td>Cantengan</td>
+                                <td>22-Januari-2020</td>
+                                <td>22-Januari-2020</td>
+                                <td>
+                                    <span class="badge bg-dark">Tertunda</span>
+                                </td>
                                 <td>
                                     <input type="checkbox">
                                     <a href="#" class="btn btn-sm btn-info">Acept</a>
