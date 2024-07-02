@@ -16,4 +16,9 @@ class IzinController extends Controller
     {
         return view('pages.karyawan.izin.create');
     }
+
+    public function store(Request $request)
+    {
+        //
+    }
 }
