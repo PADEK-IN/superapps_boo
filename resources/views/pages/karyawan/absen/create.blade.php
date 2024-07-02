@@ -114,8 +114,8 @@
 
         let marker = L.marker([0, 0]).addTo(map);
 
-        let allowedLocation = L.latLng(-6.1679125,106.729336); // Ganti dengan koordinat lokasi yang diizinkan
-        let maxDistance = 1000; // dalam meter, misal 1km
+        let allowedLocation = L.latLng(-1.639611, 103.605613); // Ganti dengan koordinat lokasi yang diizinkan
+        let maxDistance = 150; // dalam meter, misal 1km
 
         // Add a marker and circle for the allowed location
         let allowedMarker = L.marker(allowedLocation).addTo(map)
