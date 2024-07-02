@@ -12,47 +12,58 @@
     </div>
         
     <div class="row h-100 text-center mt-4">
-        <form method="POST" action="">
+        <div>
             @csrf
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 mb-4">
-                    <div class="card shadow-sm">
-                        {{-- maps start --}}
-                        <div class="card-body">
-                            <div id="map" class="h-190 w-100 rounded mb-3" style="height: 400px;"></div>
+            <div class="card card-light shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <h6 class="mb-3">Isi Absen</h6>
+                        <div class="col-12 col-md-6 mb-4">
+                            <div class="card shadow-sm">
+                                {{-- maps start --}}
+                                <div class="card-body">
+                                    <div id="map" class="h-190 w-100 rounded mb-3" style="height: 400px;"></div>
+                                </div>
+                                {{-- maps end --}}
+                            </div>
                         </div>
-                        {{-- maps end --}}
+                        <div class="col-12 col-md-6 mb-4 text-center">
+                            <div id="my_camera"></div>
+                            <input type="button" class="btn btn-primary mt-2" value="Take Snapshot" onClick="takeSnapshot()">
+                            <input type="hidden" name="image" class="image-tag">
+                            <input type="button" id="retry-button" class="btn btn-secondary mt-2" value="Ulangi" onClick="retrySnapshot()" style="display: none;">
+                            <input type="hidden" id="latitude" name="latitude">
+                            <input type="hidden" id="longitude" name="longitude">
+                        </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-6 mb-4 text-center">
-                    <div id="my_camera"></div>
-                    <input type="button" class="btn btn-primary mt-2" value="Take Snapshot" onClick="takeSnapshot()">
-                    <input type="hidden" name="image" class="image-tag">
-                    <input type="button" id="retry-button" class="btn btn-secondary mt-2" value="Ulangi" onClick="retrySnapshot()" style="display: none;">
-                    <input type="hidden" id="latitude" name="latitude">
-                    <input type="hidden" id="longitude" name="longitude">
                 </div>
             </div>
             {{-- Output start --}}
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 mb-4" id="output-card" style="display: none;">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h6 class="text-primary">Submit Absensi</h6>
-                            <p class="text-opac">Joko Sabudi</p>
-                            <p class="text-opac">Jam : <span id="time"></span></p>
-                            <p class="text-opac">Latitude: <span id="latitude-output"></span></p>
-                            <p class="text-opac">Longitude: <span id="longitude-output"></span></p>
+            <form method="POST" action="" class="card card-light shadow-sm">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <h6 class="mb-3">Data Absen</h6>
+                        <div class="col-12 col-md-6 mb-4" id="output-card" style="display: none;">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-primary">Submit Absensi</h6>
+                                    <p class="text-opac">Joko Sabudi</p>
+                                    <p class="text-opac" id="distance-info"></p>
+                                    <p class="text-opac">Jam : <span id="time"></span></p>
+                                    <p class="text-opac">Latitude: <span id="latitude-output"></span></p>
+                                    <p class="text-opac">Longitude: <span id="longitude-output"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-4">
+                            <div id="results" hidden>Your captured image will appear here...</div>
                         </div>
                     </div>
+                    {{-- Output end --}}
+                    <button id="submit-button" type="submit" class="btn btn-default btn-lg w-100" disabled>Absen</button>
                 </div>
-                <div class="col-12 col-md-6 mb-4">
-                    <div id="results" hidden>Your captured image will appear here...</div>
-                </div>
-            </div>
-            {{-- Output end --}}
-            <button type="submit" class="btn btn-default btn-lg w-100">Absen</button>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Leaflet CSS -->
@@ -95,16 +106,19 @@
         }
 
         // Initialize Map
-        var map = L.map('map').setView([0, 0], 13);
+        let map = L.map('map').setView([0, 0], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        var marker = L.marker([0, 0]).addTo(map);
+        let marker = L.marker([0, 0]).addTo(map);
+
+        let allowedLocation = L.latLng(-1.6158346,103.5905513); // Ganti dengan koordinat lokasi yang diizinkan
+        let maxDistance = 1000; // dalam meter, misal 1km
 
         function onLocationFound(e) {
-            var radius = e.accuracy / 2;
+            let radius = e.accuracy / 2;
             marker.setLatLng(e.latlng)
                 .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
@@ -115,16 +129,46 @@
             document.getElementById('longitude').value = e.latlng.lng;
             document.getElementById('latitude-output').innerText = e.latlng.lat;
             document.getElementById('longitude-output').innerText = e.latlng.lng;
+
+            // Check distance from allowed location
+            let userLocation = e.latlng;
+            let distance = userLocation.distanceTo(allowedLocation);
+
+            if (distance <= maxDistance) {
+                document.getElementById('submit-button').removeAttribute('disabled');
+                document.getElementById('distance-info').innerText = 'Jarak: ' + distance.toFixed(2) + ' meter dari lokasi yang diizinkan';
+            } else {
+                document.getElementById('submit-button').setAttribute('disabled', 'disabled');
+                document.getElementById('distance-info').innerText = 'Jarak: Lebih dari ' + (maxDistance/1000) + ' KM dari lokasi yang diizinkan';
+                alert('Anda harus berada di lokasi yang diizinkan untuk melakukan absen.');
+            }
         }
 
         function onLocationError(e) {
             alert(e.message);
         }
 
-        map.on('locationfound', onLocationFound);
-        map.on('locationerror', onLocationError);
+        // Try HTML5 geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let initialLocation = L.latLng(position.coords.latitude, position.coords.longitude);
+                map.setView(initialLocation, 16); // Set peta pada lokasi pengguna
+                marker.setLatLng(initialLocation); // Tandai lokasi pengguna dengan marker
 
-        map.locate({setView: true, maxZoom: 16});
+                // Trigger location found event
+                onLocationFound({
+                    latlng: initialLocation,
+                    accuracy: 0 // Menetapkan akurasi 0 karena data lokasi sudah pasti
+                });
+            }, function() {
+                onLocationError({ message: "Geolocation failed." });
+            });
+        } else {
+            // Browser tidak mendukung geolocation
+            onLocationError({ message: "Geolocation is not supported by this browser." });
+        }
+
+        map.on('locationerror', onLocationError);
     </script>
     <!-- Main page content ends -->
 </x-karyawan-layout>
