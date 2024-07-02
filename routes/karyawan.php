@@ -13,10 +13,10 @@ Route::middleware(['auth', 'verified', isValidKaryawan::class])->group(function 
     Route::get('/absen', [AbsenController::class, 'listPage'])->name('absen');
     Route::get('/absen/create', [AbsenController::class, 'createPage'])->name('absen.create');
     Route::post('/absen/store', [AbsenController::class, 'store'])->name('absen.store');
-
+    
+    Route::post('/izin/store', [IzinController::class, 'storeData'])->name('izin.store');
     Route::get('/izin', [IzinController::class, 'listPage'])->name('izin');
     Route::get('/izin/create', [IzinController::class, 'createPage'])->name('izin.create');
-    Route::post('/izin/store', [IzinController::class, 'store'])->name('izin.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

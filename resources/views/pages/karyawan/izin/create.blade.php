@@ -12,7 +12,7 @@
                 <h3>Buat Izin</h3>
             </div>
             <div class="card-body">
-                <form class="row" method="POST" action="{{ route('izin.store') }}">
+                <form class="row" method="POST" action="/izin/store">
                     @csrf
                     <input type="hidden" name="id_karyawan" value="{{ Auth::user()->id }}">
                     <div class="col-12 col-md-6 col-lg-4 mb-3">
@@ -56,6 +56,7 @@
                         <x-primary-button>Submit</x-primary-button>
                     </div>
                 </form>
+                
             </div>
         </div>
     </div>
