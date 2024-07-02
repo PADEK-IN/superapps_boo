@@ -12,7 +12,7 @@
                     <h3>Buat Izin</h3>
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <form class="row">
                         <div class="col-12 col-md-6 col-lg-4 mb-3">
                             <div class="form-group form-floating">
                                 <input type="text" class="form-control" value="Maxartkiller" id="nama"
@@ -52,10 +52,8 @@
                                 <label class="form-control-label" for="alasan">Alasan</label>
                             </div>
                         </div>
-                        
-                    </div>
-
-                    <x-primary-button>Submit</x-primary-button>
+                        <x-primary-button>Submit</x-primary-button>
+                    </form>
                     </div>
                 </div>
             </div>
