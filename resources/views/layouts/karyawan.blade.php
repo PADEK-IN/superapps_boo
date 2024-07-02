@@ -69,12 +69,12 @@
                 <div class="row mt-4 mb-3">
                     <div class="col-auto">
                         <figure class="avatar avatar-60 rounded mx-auto my-1">
-                            <img src="../assets/img/user1.jpg" alt="">
+                            <img src="{{ asset('assets/img/profile').'/'.Auth::user()->karyawan->foto }}" alt="">
                         </figure>
                     </div>
                     <div class="col align-self-center ps-0">
-                        <h6 class="mb-0">{{ Auth::user()->email }}</h6>
-                        <p class="text-opac">{{ ucwords(Auth::user()->role) }}</p>
+                        <h6 class="mb-0">{{ ucwords(Auth::user()->karyawan->nama) }}</h6>
+                        <p class="text-opac">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
                 <div class="row">
