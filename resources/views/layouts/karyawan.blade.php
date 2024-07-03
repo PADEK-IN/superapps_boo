@@ -209,15 +209,15 @@
                                 <i class="nav-icon bi bi-file-earmark-text"></i>
                                 <span class="nav-text">Perizinan</span>
                             </div>
-                        </a>                        
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('profile/' . Auth::user()->id) || Request::is('profile/' . Auth::user()->id . '/edit') ? 'active' : '' }}" href="{{ url('profile/' . Auth::user()->id) }}">
+                        <a class="nav-link {{ Request::is('profile') || Request::is('profile/edit') ? 'active' : '' }}" href="{{ url('profile') }}">
                             <div>
                                 <i class="nav-icon bi bi-person-circle"></i>
                                 <span class="nav-text">Profile</span>
                             </div>
-                        </a>                        
+                        </a>
                     </li>
                 </ul>
             </div>

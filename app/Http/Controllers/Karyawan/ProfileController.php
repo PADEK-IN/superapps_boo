@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Karyawan;
 
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController
 {
     public function profile()
     {
-        return view('pages.karyawan.profile.index');
+        $id = Auth::id();
+        $data = Karyawan::findOrFail($id);
+        return view('pages.karyawan.profile.index', compact('data'));
     }
 
     public function edit()
     {
-        return view('pages.karyawan.profile.edit');
+        $id = Auth::id();
+        $data = Karyawan::findOrFail($id);
+        return view('pages.karyawan.profile.edit', compact('data'));
     }
 }
