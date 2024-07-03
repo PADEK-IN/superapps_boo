@@ -13,7 +13,9 @@ class IzinController extends Controller
 {
     public function listPage()
     {
-        return view('pages.karyawan.izin.list');
+        $id_karyawan = Auth::user()->karyawan->id;
+        $izins = Izin::where('id_karyawan', $id_karyawan)->get();
+        return view('pages.karyawan.izin.list', compact('izins'));
     }
 
     public function createPage()
