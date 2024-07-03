@@ -89,7 +89,7 @@
                             </a>
                             <div class="collapse" id="absensi-sidebar" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/admin/absen">History Absesnsi</a>
+                                    <a class="nav-link" href="/admin/absen">History Absensi</a>
                                     <a class="nav-link" href="/admin/absen/request">Request Absensi</a>
                                 </nav>
                             </div>

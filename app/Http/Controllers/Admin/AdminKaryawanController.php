@@ -40,6 +40,7 @@ class AdminKaryawanController extends Controller
         // Validasi input
         $request->validate([
             'ids' => 'required|array',
+            'need' => 'required|string|in:disetujui,ditolak',
         ]);
 
         try {
@@ -61,18 +62,22 @@ class AdminKaryawanController extends Controller
                 ], 422);
             }
 
-            // Update status karyawan berdasarkan id
-            User::whereIn('id', $ids)->update(['email_verified_at' => now()]);
+            if($request->input('need') == 'disetujui') {
+                User::whereIn('id', $ids)->update(['email_verified_at' => now()]);
+            } else {
+                Karyawan::whereIn('id_user', $ids)->delete();
+                User::whereIn('id', $ids)->delete();
+            }
 
             return response()->json([
                 'status' => [
-                    'message' => 'Karyawan berhasil divalidasi.'
+                    'message' => 'Data karyawan berhasil '.$request->input('need').'.'
                 ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => [
-                    'message' => 'Terjadi kesalahan saat memvalidasi karyawan.',
+                    'message' => 'Server error, data karyawan gagal '.$request->input('need').'.'.$e->getMessage(),
                     'error' => $e->getMessage()
                 ]
             ], 500);
