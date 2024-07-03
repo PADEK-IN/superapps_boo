@@ -10,9 +10,10 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
                         <span><i class="fas fa-table me-1"></i>Tabel Karyawan Pending</span>
-                        <div class="d-flex justify-content-end">
-                            <span class="px-3 pt-1"><input type="checkbox" id="check-all"><span class="px-2">Check all</span></span>
-                            <button class="btn btn-sm btn-success" onclick="updateValidasiCheck()">Validasi Karyawan</button>
+                        <div class="d-flex justify-content-end gap-1">
+                            <span class=" pt-1"><input type="checkbox" id="check-all"><label for="check-all" class="px-2">Check all</label></span>
+                            <button class="btn btn-sm btn-success" onclick="updateValidasiCheck('disetujui')">Terima</button>
+                            <button class="btn btn-sm btn-danger" onclick="updateValidasiCheck('ditolak')">Tolak</button>
                         </div>
                     </div>
                 </div>
@@ -21,6 +22,7 @@
                         <table id="datatablesSimple" class="table table-striped " style="width:100%">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>No</th>
                                     <th>Email</th>
                                     <th>NIK</th>
@@ -34,6 +36,7 @@
                             <tbody>
                                 @foreach ($karyawans as $index => $karyawan)
                                     <tr>
+                                        <td><input type="checkbox" class="checkbox-item" id="check-{{ $karyawan->user->hashid }}"></td>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $karyawan->user->email }}</td>
                                         <td>{{ $karyawan->nik }}</td>
@@ -48,14 +51,8 @@
                                         <td>{{ $karyawan->no_hp }}</td>
                                         <td><img src="{{ asset('assets/img/profile').'/'.$karyawan->foto }}" alt="foto" width="30px"></td>
                                         <td>
-                                            <span>
-                                                <input type="checkbox" class="checkbox-item" id="check-{{ $karyawan->user->hashid }}">
-                                            </span>
-                                            <a href="#" onclick="updateValidasi('{{ $karyawan->user->hashid }}')">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-check2 mb-1" viewBox="0 0 16 16">
-                                                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
-                                                </svg>
-                                            </a>
+                                            <button class="btn btn-sm btn-success" onclick="updateValidasi('{{ $karyawan->user->hashid }}', 'disetujui')">Terima</button>
+                                            <button class="btn btn-sm btn-danger" onclick="updateValidasi('{{ $karyawan->user->hashid }}', 'ditolak')">Tolak</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -82,16 +79,21 @@
             });
         }
 
-        function updateValidasi(data){
-            const isUpdate = confirm(`Yakin ingin memvalidasi data karyawan ini?`);
+        function updateValidasi(id, need){
+            let isUpdate;
+            if(need=='disetujui'){
+                isUpdate = confirm(`Yakin ingin TERIMA data karyawan ini?`);
+            }else{
+                isUpdate = confirm(`Yakin ingin TOLAK data karyawan ini?`);
+            }
             if(!isUpdate) return
             const ids = [];
-            ids.push(data);
+            ids.push(id);
             $.ajax({
                 url: `/admin/karyawan/validate`,
                 method: "PATCH",
                 contentType: "application/json",
-                data: JSON.stringify({ids}),
+                data: JSON.stringify({ids, need}),
                 success: (response) => {
                     showToast('success', 'Success', `${response.status.message}`);
                     setTimeout(() => {
@@ -131,17 +133,22 @@
             return checkedIds // Tampilkan array ID di console
         }
 
-        function updateValidasiCheck(){
+        function updateValidasiCheck(need){
             const ids = updateCheckedIds();
             if(ids.length == 0) return alert("Maaf, tidak ada karyawan yang dipilih");
             const listIds = ids.join(", ")
-            const isUpdate = confirm(`Yakin ingin memvalidasi data karyawan dengan id ${listIds}?`);
+            let isUpdate;
+            if(need=='disetujui'){
+                isUpdate = confirm(`Yakin ingin TERIMA data karyawan dengan id ${listIds}?`);
+            }else{
+                isUpdate = confirm(`Yakin ingin TOLAK data karyawan dengan id ${listIds}??`);
+            }
             if(!isUpdate) return
             $.ajax({
                 url: `/admin/karyawan/validate`,
                 method: "PATCH",
                 contentType: "application/json",
-                data: JSON.stringify({ids}),
+                data: JSON.stringify({ids, need}),
                 success: (response) => {
                     showToast('success', 'Success', `${response.status.message}`);
                     setTimeout(() => {
