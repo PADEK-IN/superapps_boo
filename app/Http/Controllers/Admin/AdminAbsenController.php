@@ -33,6 +33,7 @@ class AdminAbsenController extends Controller
         // Validasi input
         $request->validate([
             'ids' => 'required|array',
+            'need' => 'required|string|in:disetujui,ditolak',
         ]);
 
         try {
@@ -54,18 +55,22 @@ class AdminAbsenController extends Controller
                 ], 422);
             }
 
-            // Update status Absen karyawan berdasarkan id
-            Absen::whereIn('id', $ids)->update(['status' => 'disetujui']);
+            // Update status Izin karyawan berdasarkan id
+            if($request->input('need') == 'disetujui') {
+                Absen::whereIn('id', $ids)->update(['status' => 'disetujui']);
+            } else {
+                Absen::whereIn('id', $ids)->update(['status' => 'ditolak']);
+            }
 
             return response()->json([
                 'status' => [
-                    'message' => 'Absen karyawan berhasil divalidasi.'
+                    'message' => 'Absen karyawan berhasil '.$request->input('need').'.'
                 ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => [
-                    'message' => 'Terjadi kesalahan saat memvalidasi absen karyawan.',
+                    'message' => 'Server error, data karyawan gagal '.$request->input('need').'.',
                     'error' => $e->getMessage()
                 ]
             ], 500);
