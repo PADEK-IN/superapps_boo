@@ -30,7 +30,7 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $karyawan->nik }}</td>
-                                <td>{{ $karyawan->nama }}</td>
+                                <td><a href="/admin/karyawan/detail/{{ $karyawan->hashid }}">{{ $karyawan->nama }}</a></td>
                                 <td>
                                     @if ($karyawan->jenis_kelamin == 'LK')
                                     <span class="badge bg-primary">{{ $karyawan->jenis_kelamin }}</span>

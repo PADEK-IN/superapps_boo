@@ -30,7 +30,8 @@ class AdminKaryawanController extends Controller
 
     public function detail($id)
     {
-        $karyawan = Karyawan::findOrFail($id);
+        $id_karyawan = Hashids::decode($id)[0] ?? null;
+        $karyawan = Karyawan::findOrFail($id_karyawan);
         return view('pages.admin.karyawan.detail', compact('karyawan'));
     }
 
