@@ -16,7 +16,12 @@ class AbsenController extends Controller
     public function listPage()
     {
         $id_karyawan = Auth::user()->karyawan->id;
-        $absens = Absen::where('id_karyawan', $id_karyawan)->get();
+        $absens = Absen::where('id_karyawan', $id_karyawan)
+            ->orderBy('waktu', 'desc')
+            ->get()
+            ->groupBy(function($date) {
+                return \Carbon\Carbon::parse($date->mulai)->format('F Y'); // Mengelompokkan berdasarkan bulan dan tahun
+            });
 
         return view('pages.karyawan.absen.list', compact('absens'));
     }
