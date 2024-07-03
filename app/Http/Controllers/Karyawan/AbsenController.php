@@ -28,27 +28,47 @@ class AbsenController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate([
-                // 'bukti' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'latitude' => 'required|string|max:20',
-                'longitude' => 'required|string|max:20',
-                'jarak' => 'required|string|max:20',
-                'waktu' => 'required',
-            ]);
+            if ($request->hasFile('bukti')) {
+                $imageData = $request->file('bukti');
+                dd($imageData->getMimeType());
+            } else {
+                return redirect()->route('absen.create')->with('status', 'Gagal');
+            }
+            
+            // $request->validate([
+            //     'latitude' => 'required|string|max:20',
+            //     'longitude' => 'required|string|max:20',
+            //     'jarak' => 'required|string|max:20',
+            //     'waktu' => 'required',
+            //     'bukti' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Ubah sesuai dengan kebutuhan validasi untuk file gambar
+            // ]);
 
-            $id_user = Auth::id();
-            $karyawan = Karyawan::where('id_user', $id_user)->firstOrFail();
-            $id_karyawan = $karyawan->id;
+            // $id_user = Auth::id();
+            // $karyawan = Karyawan::where('id_user', $id_user)->firstOrFail();
+            // $id_karyawan = $karyawan->id;
 
-            // Gabungkan data request dengan ID karyawan
-            $data = array_merge($request->all(), ['id_karyawan' => $id_karyawan]);
+            // // Simpan file gambar ke folder public/assets/img/absen dengan nama yang diinginkan
+            // $imageData = $request->file('bukti'); // Ambil file gambar dari request
+            // $imageName = time() . '_' . str_replace(' ', '', $karyawan->nama) . '_' . $id_karyawan . '.' . $imageData->getClientOriginalExtension();
+            // $imagePath = 'public/assets/img/absen/' . $imageName; // Path penyimpanan file
 
+            // // Pindahkan file ke folder tujuan dengan nama yang diinginkan
+            // $imageData->move(public_path('assets/img/absen'), $imageName);
+
+            // // Gabungkan data request dengan ID karyawan dan path file gambar
+            // $data = array_merge($request->all(), [
+            //     'id_karyawan' => $id_karyawan,
+            //     'bukti' => $imagePath, // Simpan path file gambar, jika perlu
+            //     'status' => 'tertunda',
+            // ]);
+
+            // // Simpan data absen ke dalam database
             // Absen::create($data);
 
-            return redirect()->route('pages.karyawan.absen.list')->with('status', $data);
+            // return redirect()->route('absen')->with('status', 'Absen berhasil disimpan.');
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-
     }
 }

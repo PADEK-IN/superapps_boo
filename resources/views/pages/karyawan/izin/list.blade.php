@@ -20,7 +20,6 @@
                                     </div>
                                     <div class="col align-self-center">
                                         <p class="lh-small mb-0">
-                                            <b>{{ $izin->karyawan->nama }}</b>
                                             <span><i class="bi bi-calendar-event"></i></span>
                                             {{ \Carbon\Carbon::parse($izin->mulai)->format('d, F Y') }}
                                             <span>-</span>

@@ -18,7 +18,7 @@ Route::middleware(['auth', 'verified', isValidKaryawan::class])->group(function 
     Route::get('/izin/create', [IzinController::class, 'createPage'])->name('izin.create');
     Route::post('/izin/store', [IzinController::class, 'storeData'])->name('izin.store');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile/{id}', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/{id}/update', [ProfileController::class, 'update'])->name('profile.update');
 });

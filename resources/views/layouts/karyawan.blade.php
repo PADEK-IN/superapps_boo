@@ -196,7 +196,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('absen') ? 'active' : '' }}" href="/absen">
+                        <a class="nav-link {{ Request::is('absen') || Request::is('absen/create') ? 'active' : '' }}" href="/absen">
                             <div>
                                 <i class="nav-icon bi bi-bar-chart-line"></i>
                                 <span class="nav-text">Absensi</span>
@@ -204,20 +204,20 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('izin') ? 'active' : '' }}" href="/izin">
+                        <a class="nav-link {{ Request::is('izin') || Request::is('izin/create') ? 'active' : '' }}" href="/izin">
                             <div>
                                 <i class="nav-icon bi bi-file-earmark-text"></i>
                                 <span class="nav-text">Perizinan</span>
                             </div>
-                        </a>
+                        </a>                        
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('profile') ? 'active' : '' }}" href="/profile">
+                        <a class="nav-link {{ Request::is('profile/' . Auth::user()->id) || Request::is('profile/' . Auth::user()->id . '/edit') ? 'active' : '' }}" href="{{ url('profile/' . Auth::user()->id) }}">
                             <div>
                                 <i class="nav-icon bi bi-person-circle"></i>
                                 <span class="nav-text">Profile</span>
                             </div>
-                        </a>
+                        </a>                        
                     </li>
                 </ul>
             </div>

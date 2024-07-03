@@ -59,13 +59,13 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 mb-4">
-                            <div id="results" hidden>Your captured image will appear here...</div>
+                            <div id="results">Your captured image will appear here...</div>
                         </div>
                     </div>
-                    {{-- Output end --}}
                     <button id="submit-button" type="submit" class="btn btn-default btn-lg w-100" disabled>Absen</button>
                 </div>
             </form>
+            
         </div>
     </div>
 
@@ -73,12 +73,10 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" type="text/javascript"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
-    <script language="JavaScript">
 
+    <script language="JavaScript">
         function showToast(type, title, message) {
             iziToast[type]({
                 title: title,
@@ -109,19 +107,42 @@
 
         function takeSnapshot() {
             Webcam.snap(function(data_uri) {
-                document.querySelector('.image-tag').value = data_uri;
-                document.getElementById('results').innerHTML = '<img class="img-fluid" src="' + data_uri + '"/>';
-                document.getElementById('results').removeAttribute('hidden');
+                // Simpan data URI ke hidden input field
+                document.querySelector('.image-tag').value = dataURItoBlob(data_uri);
+
+                // Tampilkan preview gambar
+                let img = document.createElement('img');
+                img.src = data_uri;
+                img.className = 'img-fluid';
+                let results = document.getElementById('results');
+                results.innerHTML = '';
+                results.appendChild(img);
+
+                // Tampilkan output card untuk submit
                 document.getElementById('output-card').style.display = 'block';
                 document.getElementById('retry-button').style.display = 'inline-block';
                 $("form").removeClass("d-none");
 
-                // Set current time
-                var now = new Date();
+                // Set waktu saat ini
+                let now = new Date();
                 document.getElementById('time').innerText = now.toLocaleTimeString();
                 document.getElementById('waktu').value = now;
             });
         }
+
+        // Fungsi untuk mengubah data URI menjadi Blob
+        function dataURItoBlob(dataURI) {
+            let byteString = atob(dataURI.split(',')[1]);
+            let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            let ab = new ArrayBuffer(byteString.length);
+            let ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            let blob = new Blob([ab], { type: mimeString });
+            return blob;
+        }
+
 
         function retrySnapshot() {
             document.getElementById('results').innerHTML = '';
@@ -131,79 +152,80 @@
             Webcam.attach('#my_camera');
             $("form").addClass("d-none");
         }
+    </script>
+    <script>
+                // Initialize Map
+                let map = L.map('map').setView([0, 0], 13);
 
-        // Initialize Map
-        let map = L.map('map').setView([0, 0], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+                let marker = L.marker([0, 0]).addTo(map);
 
-        let marker = L.marker([0, 0]).addTo(map);
+                // let allowedLocation = L.latLng(-1.616122, 103.592451); // Ganti dengan koordinat lokasi yang diizinkan
+                let allowedLocation = L.latLng(-1.639568, 103.605423);
+                let maxDistance = 1000; // dalam meter, misal 50 meter
 
-        // let allowedLocation = L.latLng(-1.616122, 103.592451); // Ganti dengan koordinat lokasi yang diizinkan
-        let allowedLocation = L.latLng(-1.639568, 103.605423);
-        let maxDistance = 150; // dalam meter, misal 50 meter
+                // Add a marker and circle for the allowed location
+                let allowedMarker = L.marker(allowedLocation).addTo(map)
+                    .bindPopup('Lokasi yang diizinkan').openPopup();
+                L.circle(allowedLocation, { radius: maxDistance }).addTo(map);
 
-        // Add a marker and circle for the allowed location
-        let allowedMarker = L.marker(allowedLocation).addTo(map)
-            .bindPopup('Lokasi yang diizinkan').openPopup();
-        L.circle(allowedLocation, { radius: maxDistance }).addTo(map);
+                function onLocationFound(e) {
+                    let radius = e.accuracy / 2;
+                    marker.setLatLng(e.latlng)
+                        .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-        function onLocationFound(e) {
-            let radius = e.accuracy / 2;
-            marker.setLatLng(e.latlng)
-                .bindPopup("You are within " + radius + " meters from this point").openPopup();
+                    L.circle(e.latlng, radius).addTo(map);
 
-            L.circle(e.latlng, radius).addTo(map);
+                    // Update hidden input fields and output card
+                    document.getElementById('latitude').value = e.latlng.lat;
+                    document.getElementById('longitude').value = e.latlng.lng;
+                    document.getElementById('latitude-output').innerText = e.latlng.lat;
+                    document.getElementById('longitude-output').innerText = e.latlng.lng;
 
-            // Update hidden input fields and output card
-            document.getElementById('latitude').value = e.latlng.lat;
-            document.getElementById('longitude').value = e.latlng.lng;
-            document.getElementById('latitude-output').innerText = e.latlng.lat;
-            document.getElementById('longitude-output').innerText = e.latlng.lng;
+                    // Check distance from allowed location
+                    let userLocation = e.latlng;
+                    let distance = userLocation.distanceTo(allowedLocation);
 
-            // Check distance from allowed location
-            let userLocation = e.latlng;
-            let distance = userLocation.distanceTo(allowedLocation);
+                    if (distance <= maxDistance) {
+                        document.getElementById('submit-button').removeAttribute('disabled');
+                        document.getElementById('distance-info').innerHTML = '<span class="text-success">Jarak: ' + distance.toFixed(2) + ' meter dari lokasi yang diizinkan</span>';
+                        document.getElementById('jarak').value = e.latlng.lng;
+                    } else {
+                        document.getElementById('submit-button').setAttribute('disabled', 'disabled');
+                        document.getElementById('distance-info').innerHTML = '<span class="text-danger">Jarak Lebih dari ' + (maxDistance/1000) + ' KM dari lokasi yang diizinkan</span>';
+                        // alert('Anda harus berada di lokasi yang dii  zinkan untuk melakukan absen.');
+                        showToast('error', 'Error', 'Anda harus berada di lokasi yang diizinkan untuk melakukan absen.');
+                    }
+                }
 
-            if (distance <= maxDistance) {
-                document.getElementById('submit-button').removeAttribute('disabled');
-                document.getElementById('distance-info').innerHTML = '<span class="text-success">Jarak: ' + distance.toFixed(2) + ' meter dari lokasi yang diizinkan</span>';
-                document.getElementById('jarak').value = e.latlng.lng;
-            } else {
-                document.getElementById('submit-button').setAttribute('disabled', 'disabled');
-                document.getElementById('distance-info').innerHTML = '<span class="text-danger">Jarak Lebih dari ' + (maxDistance/1000) + ' KM dari lokasi yang diizinkan</span>';
-                // alert('Anda harus berada di lokasi yang dii  zinkan untuk melakukan absen.');
-                showToast('error', 'Error', 'Anda harus berada di lokasi yang diizinkan untuk melakukan absen.');
-            }
-        }
+                function onLocationError(e) {
+                    alert(e.message);
+                }
 
-        function onLocationError(e) {
-            alert(e.message);
-        }
+                // Try HTML5 geolocation
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        let initialLocation = L.latLng(position.coords.latitude, position.coords.longitude);
+                        map.setView(initialLocation, 16); // Set peta pada lokasi pengguna
+                        marker.setLatLng(initialLocation); // Tandai lokasi pengguna dengan marker
 
-        // Try HTML5 geolocation
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                let initialLocation = L.latLng(position.coords.latitude, position.coords.longitude);
-                map.setView(initialLocation, 16); // Set peta pada lokasi pengguna
-                marker.setLatLng(initialLocation); // Tandai lokasi pengguna dengan marker
+                        // Trigger location found event
+                        onLocationFound({
+                            latlng: initialLocation,
+                            accuracy: 0 // Menetapkan akurasi 0 karena data lokasi sudah pasti
+                        });
+                    }, function() {
+                        onLocationError({ message: "Geolocation failed." });
+                    });
+                } else {
+                    // Browser tidak mendukung geolocation
+                    onLocationError({ message: "Geolocation is not supported by this browser." });
+                }
 
-                // Trigger location found event
-                onLocationFound({
-                    latlng: initialLocation,
-                    accuracy: 0 // Menetapkan akurasi 0 karena data lokasi sudah pasti
-                });
-            }, function() {
-                onLocationError({ message: "Geolocation failed." });
-            });
-        } else {
-            // Browser tidak mendukung geolocation
-            onLocationError({ message: "Geolocation is not supported by this browser." });
-        }
-
-        map.on('locationerror', onLocationError);
+                map.on('locationerror', onLocationError);
     </script>
     <!-- Main page content ends -->
 </x-karyawan-layout>
