@@ -23,7 +23,8 @@ class AdminIzinController extends Controller
 
     public function detail($id)
     {
-        $izin = Izin::findOrFail($id);
+        $id_izin = Hashids::decode($id)[0] ?? null;
+        $izin = Izin::findOrFail($id_izin);
         return view('pages.admin.izin.detail', compact('izin'));
     }
 
