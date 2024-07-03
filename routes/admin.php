@@ -13,6 +13,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', isValidAdmin::class])->g
 
     Route::get('/karyawan', [AdminKaryawanController::class, 'listPage'])->name('admin.karyawan');
     Route::get('/karyawan/pending', [AdminKaryawanController::class, 'pendingPage'])->name('admin.karyawan.pending');
+    Route::patch('/karyawan/validate', [AdminKaryawanController::class, 'validate'])->name('admin.karyawan.validate');
 
     Route::get('/absen', [AdminAbsenController::class, 'listPage'])->name('admin.absen');
     Route::get('/absen/request', [AdminAbsenController::class, 'requestPage'])->name('admin.absen.request');
