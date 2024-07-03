@@ -33,6 +33,7 @@ class AdminIzinController extends Controller
         // Validasi input
         $request->validate([
             'ids' => 'required|array',
+            'need' => 'required|string|in:disetujui,ditolak',
         ]);
 
         try {
@@ -55,17 +56,21 @@ class AdminIzinController extends Controller
             }
 
             // Update status Izin karyawan berdasarkan id
-            Izin::whereIn('id', $ids)->update(['status' => 'disetujui']);
+            if($request->input('need') == 'disetujui') {
+                Izin::whereIn('id', $ids)->update(['status' => 'disetujui']);
+            } else {
+                Izin::whereIn('id', $ids)->update(['status' => 'ditolak']);
+            }
 
             return response()->json([
                 'status' => [
-                    'message' => 'Izin karyawan berhasil divalidasi.'
+                    'message' => 'Izin karyawan berhasil .'.$request->input('need').'.'
                 ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => [
-                    'message' => 'Terjadi kesalahan saat memvalidasi izin karyawan.',
+                    'message' => 'Server error, data karyawan gagal '.$request->input('need').'.',
                     'error' => $e->getMessage()
                 ]
             ], 500);

@@ -77,7 +77,7 @@ class AdminKaryawanController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => [
-                    'message' => 'Server error, data karyawan gagal '.$request->input('need').'.'.$e->getMessage(),
+                    'message' => 'Server error, data karyawan gagal '.$request->input('need').'.',
                     'error' => $e->getMessage()
                 ]
             ], 500);
