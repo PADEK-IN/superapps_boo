@@ -10,9 +10,10 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
                         <span><i class="fas fa-table me-1"></i>Tabel Request Perizinan</span>
-                        <div class="d-flex justify-content-end">
-                            <span class="px-3 pt-1"><input type="checkbox" id="check-all"><span class="px-2">Check all</span></span>
-                            <button class="btn btn-sm btn-success" onclick="updateValidasiCheck()">Validasi Izin</button>
+                        <div class="d-flex justify-content-end gap-2">
+                            <span class=" pt-1"><input type="checkbox" id="check-all"><label for="check-all" class="px-2">Check all</label></span>
+                            <button class="btn btn-sm btn-success" onclick="updateValidasiCheck('disetujui')">Terima</button>
+                            <button class="btn btn-sm btn-danger" onclick="updateValidasiCheck('ditolak')">Tolak</button>
                         </div>
                     </div>
                 </div>
@@ -21,6 +22,7 @@
                         <table id="datatablesSimple" class="table table-striped " style="width:100%">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Keterangan</th>
@@ -34,6 +36,7 @@
                             <tbody>
                                 @foreach ($izins as $index => $izin)
                                     <tr>
+                                        <td><input type="checkbox" class="checkbox-item" id="check-{{ $izin->hashid }}"></td>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $izin->karyawan->nama }}</td>
                                         <td>{{ $izin->keterangan }}</td>
@@ -50,14 +53,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <span>
-                                                <input type="checkbox" class="checkbox-item" id="check-{{ $izin->hashid }}">
-                                            </span>
-                                            <a href="#" onclick="updateValidasi('{{ $izin->hashid }}')">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-check2 mb-1" viewBox="0 0 16 16">
-                                                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
-                                                </svg>
-                                            </a>
+                                            <button class="btn btn-sm btn-success" onclick="updateValidasi('{{ $izin->hashid }}', 'disetujui')">Terima</button>
+                                            <button class="btn btn-sm btn-danger" onclick="updateValidasi('{{ $izin->hashid }}', 'ditolak')">Tolak</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -84,16 +81,21 @@
             });
         }
 
-        function updateValidasi(data){
-            const isUpdate = confirm(`Yakin ingin memvalidasi izin karyawan ini?`);
+        function updateValidasi(id, need){
+            let isUpdate;
+            if(need=='disetujui'){
+                isUpdate = confirm(`Yakin ingin TERIMA izin karyawan ini?`);
+            }else{
+                isUpdate = confirm(`Yakin ingin TOLAK izin karyawan ini?`);
+            }
             if(!isUpdate) return
             const ids = [];
-            ids.push(data);
+            ids.push(id);
             $.ajax({
                 url: `/admin/izin/validate`,
                 method: "PATCH",
                 contentType: "application/json",
-                data: JSON.stringify({ids}),
+                data: JSON.stringify({ids, need}),
                 success: (response) => {
                     showToast('success', 'Success', `${response.status.message}`);
                     setTimeout(() => {
@@ -133,17 +135,22 @@
             return checkedIds // Tampilkan array ID di console
         }
 
-        function updateValidasiCheck(){
+        function updateValidasiCheck(need){
             const ids = updateCheckedIds();
-            if(ids.length == 0) return alert("Maaf, tidak ada karyawan yang dipilih");
+            if(ids.length == 0) return alert("Maaf, tidak ada izin yang dipilih");
             const listIds = ids.join(", ")
-            const isUpdate = confirm(`Yakin ingin memvalidasi izin karyawan dengan id ${listIds}?`);
+            let isUpdate;
+            if(need=='disetujui'){
+                isUpdate = confirm(`Yakin ingin TERIMA izin karyawan dengan id permohonan: ${listIds}?`);
+            }else{
+                isUpdate = confirm(`Yakin ingin TOLAK izin karyawan dengan id permohonan: ${listIds}??`);
+            }
             if(!isUpdate) return
             $.ajax({
                 url: `/admin/izin/validate`,
                 method: "PATCH",
                 contentType: "application/json",
-                data: JSON.stringify({ids}),
+                data: JSON.stringify({ids, need}),
                 success: (response) => {
                     showToast('success', 'Success', `${response.status.message}`);
                     setTimeout(() => {
