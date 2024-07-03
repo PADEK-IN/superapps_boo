@@ -71,4 +71,18 @@ class AdminKaryawanController extends Controller
             ], 500);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $id_karyawan = Hashids::decode($id)[0] ?? null;
+            $karyawan = Karyawan::find($id_karyawan);
+            $karyawan->delete();
+
+            return redirect()->back()->with('success', 'Karyawan berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus karyawan.');
+        }
+    }
+
 }
