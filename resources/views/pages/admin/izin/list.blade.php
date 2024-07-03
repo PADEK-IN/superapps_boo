@@ -15,51 +15,39 @@
                     <table id="datatablesSimple" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama</th>
                                 <th>Keterangan</th>
                                 <th>Alasan</th>
                                 <th>Mulai</th>
-                                <th>Sampai</th>
+                                <th>Selesai</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($izins as $index => $izin)
                             <tr>
-                                <td>Joko Widodo</td>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $izin->karyawan->nama }}</td>
+                                <td>{{ $izin->keterangan }}</td>
+                                <td>{{ Str::limit($izin->alasan, 30) }}</td>
+                                <td>{{ $izin->mulai }}</td>
+                                <td>{{ $izin->selesai }}</td>
                                 <td>
-                                    <span class="badge bg-primary">Sakit</span>
+                                    @if ($izin->status == 'disetujui')
+                                    <span class="badge bg-success">{{ ucwords($izin->status) }}</span>
+                                    @elseif($izin->status == 'tertunda')
+                                    <span class="badge bg-warning">{{ ucwords($izin->status) }}</span>
+                                    @else
+                                    <span class="badge bg-danger">{{ ucwords($izin->status) }}</span>
+                                    @endif
                                 </td>
-                                <td>Masuk Angin</td>
-                                <td>22-Januari-2020</td>
-                                <td>22-Januari-2020</td>
                                 <td>
-                                    <span class="badge bg-success">Disetujui</span>
+                                    <a href="/admin/izin/detail/{{ $izin->hashid }}" class="btn btn-sm btn-info">Detail</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Putri Wulandari</td>
-                                <td>
-                                    <span class="badge bg-warning">Cuti</span>
-                                </td>
-                                <td>Pulang Kampung</td>
-                                <td>22-Januari-2020</td>
-                                <td>22-Januari-2020</td>
-                                <td>
-                                    <span class="badge bg-dark">Tertunda</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Putri Wulandari</td>
-                                <td>
-                                    <span class="badge bg-primary">Sakit</span>
-                                </td>
-                                <td>Cantengan</td>
-                                <td>22-Januari-2020</td>
-                                <td>22-Januari-2020</td>
-                                <td>
-                                    <span class="badge bg-danger">Ditolak</span>
-                                </td>
-                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
