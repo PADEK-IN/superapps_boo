@@ -13,17 +13,18 @@ Route::prefix('admin')->middleware(['auth', 'verified', isValidAdmin::class])->g
 
     Route::get('/karyawan', [AdminKaryawanController::class, 'listPage'])->name('admin.karyawan');
     Route::get('/karyawan/pending', [AdminKaryawanController::class, 'pendingPage'])->name('admin.karyawan.pending');
+    Route::get('/karyawan/detail/{id}', [AdminKaryawanController::class, 'detail'])->name('admin.karyawan.detail');
     Route::patch('/karyawan/validate', [AdminKaryawanController::class, 'validate'])->name('admin.karyawan.validate');
-    Route::get('/karyawan/edit/{id}', [AdminKaryawanController::class, 'edit'])->name('admin.karyawan.edit');
-    Route::post('/karyawan/update/{id}', [AdminKaryawanController::class, 'update'])->name('admin.karyawan.update');
     Route::get('/karyawan/delete/{id}', [AdminKaryawanController::class, 'destroy'])->name('admin.karyawan.destroy');
 
     Route::get('/absen', [AdminAbsenController::class, 'listPage'])->name('admin.absen');
     Route::get('/absen/request', [AdminAbsenController::class, 'requestPage'])->name('admin.absen.request');
+    Route::get('/absen/detail/{id}', [AdminAbsenController::class, 'detail'])->name('admin.absen.detail');
     Route::patch('/absen/validate', [AdminAbsenController::class, 'validate'])->name('admin.absen.validate');
 
     Route::get('/izin', [AdminIzinController::class, 'listPage'])->name('admin.izin');
     Route::get('/izin/request', [AdminIzinController::class, 'requestPage'])->name('admin.izin.request');
+    Route::get('/izin/detail/{id}', [AdminIzinController::class, 'detail'])->name('admin.izin.detail');
     Route::patch('/izin/validate', [AdminIzinController::class, 'validate'])->name('admin.izin.validate');
 
 });
