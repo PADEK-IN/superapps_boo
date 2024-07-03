@@ -3,54 +3,46 @@
     <a href="/izin/create" class="btn-login btn btn-lg btn-default shadow-sm mb-5">Buat Izin</a>
     <!-- main page content -->
     <div class="main-container container top-20">
-        <!-- Chat list   -->
+        <!-- Chat list -->
         <div class="row">
             <div class="col-12 px-0">
                 <div class="list-group list-group-flush bg-none rounded-0">
-                    <x-list-absen 
-                        image="assets/img/user1.jpg" 
-                        name="Williums" 
-                        description="Will deliver your order" 
-                        time="last week" 
-                    />
-                    <div class="list-group-item text-center py-2 text-opac">This month</div>
-                    <x-list-absen 
-                        image="assets/img/user3.jpg" 
-                        name="Williums" 
-                        description="Will deliver your order" 
-                        time="2 week ago" 
-                    />
-                    <x-list-absen 
-                    image="assets/img/user2.jpg" 
-                    name="Maxartkillers" 
-                    description="Will deliver your order" 
-                    time="2 week ago" 
-                    />
-                    <x-list-absen 
-                        image="assets/img/user1.jpg" 
-                        name="Johnson" 
-                        description="is now available to take your order. tap to continue order in your cart." 
-                        time="2 week ago" 
-                    />
-                    <div class="list-group-item text-center py-2 text-opac">Earlier</div>
-                    <x-list-absen 
-                    image="assets/img/user2.jpg" 
-                    name="Maxartkillers" 
-                    description="Will deliver your order" 
-                    time="1 mounth ago" 
-                    />
-                    <div class="list-group-item text-center py-2 text-opac">This month</div>
-                    <x-list-absen 
-                        image="assets/img/user3.jpg" 
-                        name="Silvasaa" 
-                        description="is now available to take your order. tap to
-                                    continue order in your cart." 
-                        time="2 week ago" 
-                    />
+                    @foreach($izins as $month => $monthIzins)
+                        <div class="list-group-item text-center py-2 text-opac">{{ $month }}</div>
+                        @foreach($monthIzins as $izin)
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-auto text-center">
+                                        <i class="bi bi-person"></i>
+                                        <p class="lh-small text-{{ $izin->keterangan == 'sakit' ? 'primary' : ($izin->keterangan == 'cuti' ? 'warning' : 'default') }}">
+                                            <b>{{ $izin->keterangan }}</b>
+                                        </p>
+                                    </div>
+                                    <div class="col align-self-center">
+                                        <p class="lh-small mb-0">
+                                            <b>{{ $izin->karyawan->nama }}</b>
+                                            <span><i class="bi bi-calendar-event"></i></span>
+                                            {{ \Carbon\Carbon::parse($izin->mulai)->format('d, F Y') }}
+                                            <span>-</span>
+                                            {{ \Carbon\Carbon::parse($izin->selesai)->format('d, F Y') }}
+                                            <span class="small text-opac">
+                                                {{ \Carbon\Carbon::parse($izin->mulai)->diffInDays(\Carbon\Carbon::parse($izin->selesai)) }} days
+                                            </span>
+                                        </p>
+                                        <p class="small text-opac">{{ $izin->alasan }}</p>
+                                    </div>
+                                    <div class="col-auto text-center">
+                                        <div class="avatar avatar-40 coverimg rounded-circle" style="background-image: url('assets/img/user1.jpg');">
+                                            <i class="bi bi-{{ $izin->status == 'disetujui' ? 'check-circle text-success' : ($izin->status == 'tertunda' ? 'dash-circle text-warning' : 'x-circle text-danger') }}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
     <!-- main page content ends -->
 </x-karyawan-layout>
-
