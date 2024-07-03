@@ -21,6 +21,12 @@ class AdminAbsenController extends Controller
         return view('pages.admin.absen.requestList', compact('absens'));
     }
 
+    public function detail($id)
+    {
+        $absen = Absen::findOrFail($id);
+        return view('pages.admin.absen.detail', compact('absen'));
+    }
+
     public function validate(Request $request)
     {
         // Validasi input
