@@ -21,15 +21,9 @@ Route::prefix('admin')->middleware(['auth', 'verified', isValidAdmin::class])->g
     Route::get('/absen', [AdminAbsenController::class, 'listPage'])->name('admin.absen');
     Route::get('/absen/request', [AdminAbsenController::class, 'requestPage'])->name('admin.absen.request');
     Route::patch('/absen/validate', [AdminAbsenController::class, 'validate'])->name('admin.absen.validate');
-    Route::get('/absen/edit/{id}', [AdminAbsenController::class, 'edit'])->name('admin.absen.edit');
-    Route::post('/absen/update/{id}', [AdminAbsenController::class, 'update'])->name('admin.absen.update');
-    Route::get('/absen/delete/{id}', [AdminAbsenController::class, 'destroy'])->name('admin.absen.destroy');
 
     Route::get('/izin', [AdminIzinController::class, 'listPage'])->name('admin.izin');
     Route::get('/izin/request', [AdminIzinController::class, 'requestPage'])->name('admin.izin.request');
     Route::patch('/izin/validate', [AdminIzinController::class, 'validate'])->name('admin.izin.validate');
-    Route::get('/izin/edit/{id}', [AdminIzinController::class, 'edit'])->name('admin.izin.edit');
-    Route::post('/izin/update/{id}', [AdminIzinController::class, 'update'])->name('admin.izin.update');
-    Route::get('/izin/delete/{id}', [AdminIzinController::class, 'destroy'])->name('admin.izin.destroy');
 
 });
