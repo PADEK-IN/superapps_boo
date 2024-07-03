@@ -7,6 +7,7 @@ use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -17,6 +18,13 @@ class User extends Authenticatable
     {
         return Hashids::encode($this->id);
     }
+
+    // // Contoh function untuk menambahkan data ke dalam output tabel, dengan nama attr nama. Seperti user->nama
+    // public function getNamaAttribute()
+    // {
+    //     $karyawan = Karyawan::where('id_user', $this->id)->first();
+    //     return $karyawan ? $karyawan->nama : null;
+    // }
 
     /**
      * The attributes that are mass assignable.
@@ -52,8 +60,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function karyawan(): HasMany
+    public function karyawan(): HasOne
     {
-        return $this->hasMany(Karyawan::class, 'id_user');
+        return $this->hasOne(Karyawan::class, 'id_user');
     }
 }

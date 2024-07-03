@@ -36,6 +36,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/admin/profile">Profile</a></li>
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
                 </li>
@@ -63,7 +64,7 @@
                             <div class="collapse" id="user-sidebar" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/admin/karyawan">Semua Karyawan</a>
-                                    <a class="nav-link" href="/admin/karyawan/pending">Karyawan Panding</a>
+                                    <a class="nav-link" href="/admin/karyawan/pending">Karyawan Pending</a>
                                 </nav>
                             </div>
                             {{-- Absensi List --}}
@@ -75,7 +76,7 @@
                             <div class="collapse" id="absensi-sidebar" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="/admin/absen">History Absesnsi</a>
-                                    <a class="nav-link" href="/admin/absen/request">Requset Absensi</a>
+                                    <a class="nav-link" href="/admin/absen/request">Request Absensi</a>
                                 </nav>
                             </div>
                             {{-- Perizinan List --}}
@@ -90,10 +91,6 @@
                                     <a class="nav-link" href="/admin/izin/request">Request Izin</a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="/logout">
-                                <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
-                                Logout
-                            </a>
                         </div>
                     </div>
                 </nav>
@@ -111,5 +108,36 @@
         <script src="{{ asset('assets/admin/assets/demo/chart-area-demo.js') }}assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{{ asset('assets/admin/js/datatables-simple-demo.js') }}"></script>
+        {{-- Toast --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                function showToast(type, title, message) {
+                    iziToast[type]({
+                        title: title,
+                        message: message,
+                        position: 'bottomRight'
+                    });
+                }
+
+                @if(session('status'))
+                    showToast('success', 'Success', '{{ session('status') }}');
+                @endif
+
+                @if(session('success'))
+                    showToast('success', 'Success', '{{ session('success') }}');
+                @endif
+
+                @if(session('error'))
+                    showToast('error', 'Error', '{{ session('error') }}');
+                @endif
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        showToast('error', 'Error', '{{ $error }}');
+                    @endforeach
+                @endif
+            });
+        </script>
     </body>
 </html>

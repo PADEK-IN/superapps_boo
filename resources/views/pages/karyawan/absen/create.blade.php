@@ -10,7 +10,7 @@
             <h3 class="mb-0">Buat Absens</h3>
         </div>
     </div>
-        
+
     <div class="row h-100 text-center mt-4">
         <div>
             @csrf
@@ -30,16 +30,14 @@
                         <div class="col-12 col-md-6 mb-4 text-center">
                             <div id="my_camera"></div>
                             <input type="button" class="btn btn-primary mt-2" value="Take Snapshot" onClick="takeSnapshot()">
-                            <input type="hidden" name="image" class="image-tag">
                             <input type="button" id="retry-button" class="btn btn-secondary mt-2" value="Ulangi" onClick="retrySnapshot()" style="display: none;">
-                            <input type="hidden" id="latitude" name="latitude">
-                            <input type="hidden" id="longitude" name="longitude">
                         </div>
                     </div>
                 </div>
             </div>
             {{-- Output start --}}
-            <form method="POST" action="" class="card card-light shadow-sm">
+            <form method="POST" action="/absen/store" class="card card-light shadow-sm d-none" enctype="multipart/form-data">
+                @csrf
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <h6 class="mb-3">Data Absen</h6>
@@ -47,11 +45,16 @@
                             <div class="card shadow-sm">
                                 <div class="card-body">
                                     <h6 class="text-primary">Submit Absensi</h6>
-                                    <p class="text-opac">Joko Sabudi</p>
+                                    <p class="text-opac">{{ $nama }}</p>
                                     <p class="text-opac" id="distance-info"></p>
                                     <p class="text-opac">Jam : <span id="time"></span></p>
                                     <p class="text-opac">Latitude: <span id="latitude-output"></span></p>
                                     <p class="text-opac">Longitude: <span id="longitude-output"></span></p>
+                                    <input type="hidden" id="waktu" name="waktu">
+                                    <input type="hidden" id="bukti" name="bukti" class="image-tag">
+                                    <input type="hidden" id="latitude" name="latitude">
+                                    <input type="hidden" id="longitude" name="longitude">
+                                    <input type="hidden" id="jarak" name="jarak">
                                 </div>
                             </div>
                         </div>
@@ -71,29 +74,52 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" type="text/javascript"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
     <script language="JavaScript">
-        // Initialize Webcam
-        Webcam.set({
-            width: 400,
-            height: 300,
-            image_format: 'jpeg',
-            jpeg_quality: 90
+
+        function showToast(type, title, message) {
+            iziToast[type]({
+                title: title,
+                message: message,
+                position: 'bottomRight'
+            });
+        }
+
+        $(document).ready(function() {
+            // Initialize Webcam
+            Webcam.set({
+                width: 400,
+                height: 300,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+
+            Webcam.attach('#my_camera');
+
+            $("#my_camera").css({
+                "width": "100%",
+                "margin": "auto"
+            })
+
+            $("video").addClass("img-fluid");
+
         });
-    
-        Webcam.attach('#my_camera');
-    
+
         function takeSnapshot() {
             Webcam.snap(function(data_uri) {
                 document.querySelector('.image-tag').value = data_uri;
-                document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+                document.getElementById('results').innerHTML = '<img class="img-fluid" src="' + data_uri + '"/>';
                 document.getElementById('results').removeAttribute('hidden');
                 document.getElementById('output-card').style.display = 'block';
                 document.getElementById('retry-button').style.display = 'inline-block';
+                $("form").removeClass("d-none");
 
                 // Set current time
                 var now = new Date();
                 document.getElementById('time').innerText = now.toLocaleTimeString();
+                document.getElementById('waktu').value = now;
             });
         }
 
@@ -103,6 +129,7 @@
             document.getElementById('output-card').style.display = 'none';
             document.getElementById('retry-button').style.display = 'none';
             Webcam.attach('#my_camera');
+            $("form").addClass("d-none");
         }
 
         // Initialize Map
@@ -114,8 +141,9 @@
 
         let marker = L.marker([0, 0]).addTo(map);
 
-        let allowedLocation = L.latLng(-1.639611, 103.605613); // Ganti dengan koordinat lokasi yang diizinkan
-        let maxDistance = 150; // dalam meter, misal 1km
+        // let allowedLocation = L.latLng(-1.616122, 103.592451); // Ganti dengan koordinat lokasi yang diizinkan
+        let allowedLocation = L.latLng(-1.639568, 103.605423);
+        let maxDistance = 150; // dalam meter, misal 50 meter
 
         // Add a marker and circle for the allowed location
         let allowedMarker = L.marker(allowedLocation).addTo(map)
@@ -142,10 +170,12 @@
             if (distance <= maxDistance) {
                 document.getElementById('submit-button').removeAttribute('disabled');
                 document.getElementById('distance-info').innerHTML = '<span class="text-success">Jarak: ' + distance.toFixed(2) + ' meter dari lokasi yang diizinkan</span>';
+                document.getElementById('jarak').value = e.latlng.lng;
             } else {
                 document.getElementById('submit-button').setAttribute('disabled', 'disabled');
                 document.getElementById('distance-info').innerHTML = '<span class="text-danger">Jarak Lebih dari ' + (maxDistance/1000) + ' KM dari lokasi yang diizinkan</span>';
-                alert('Anda harus berada di lokasi yang diizinkan untuk melakukan absen.');
+                // alert('Anda harus berada di lokasi yang dii  zinkan untuk melakukan absen.');
+                showToast('error', 'Error', 'Anda harus berada di lokasi yang diizinkan untuk melakukan absen.');
             }
         }
 
