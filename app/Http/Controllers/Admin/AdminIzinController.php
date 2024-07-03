@@ -21,6 +21,12 @@ class AdminIzinController extends Controller
         return view('pages.admin.izin.requestList', compact('izins'));
     }
 
+    public function detail($id)
+    {
+        $izin = Izin::findOrFail($id);
+        return view('pages.admin.izin.detail', compact('izin'));
+    }
+
     public function validate(Request $request)
     {
         // Validasi input
