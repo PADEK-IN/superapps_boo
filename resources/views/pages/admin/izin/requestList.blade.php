@@ -137,7 +137,7 @@
 
         function updateValidasiCheck(need){
             const ids = updateCheckedIds();
-            if(ids.length == 0) return alert("Maaf, tidak ada karyawan yang dipilih");
+            if(ids.length == 0) return alert("Maaf, tidak ada izin yang dipilih");
             const listIds = ids.join(", ")
             let isUpdate;
             if(need=='disetujui'){
