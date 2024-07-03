@@ -39,7 +39,7 @@ class IzinController extends Controller
 
             // Gabungkan data request dengan ID karyawan
             // $data = array_merge($request->all(), ['id_karyawan' => $id_karyawan]);
-            // dd($data);
+            // dd($data); 
             // Izin::create($data);
 
             // return redirect()->route('izin');
