@@ -7,46 +7,33 @@
         <div class="row">
             <div class="col-12 px-0">
                 <div class="list-group list-group-flush bg-none rounded-0">
-                    <x-list-absen 
-                        image="assets/img/user1.jpg" 
-                        name="Williums" 
-                        description="Will deliver your order" 
-                        time="last week" 
-                    />
-                    <div class="list-group-item text-center py-2 text-opac">This month</div>
-                    <x-list-absen 
-                        image="assets/img/user3.jpg" 
-                        name="Williums" 
-                        description="Will deliver your order" 
-                        time="2 week ago" 
-                    />
-                    <x-list-absen 
-                    image="assets/img/user2.jpg" 
-                    name="Maxartkillers" 
-                    description="Will deliver your order" 
-                    time="2 week ago" 
-                    />
-                    <x-list-absen 
-                        image="assets/img/user1.jpg" 
-                        name="Johnson" 
-                        description="is now available to take your order. tap to continue order in your cart." 
-                        time="2 week ago" 
-                    />
-                    <div class="list-group-item text-center py-2 text-opac">Earlier</div>
-                    <x-list-absen 
-                    image="assets/img/user2.jpg" 
-                    name="Maxartkillers" 
-                    description="Will deliver your order" 
-                    time="1 mounth ago" 
-                    />
-                    <div class="list-group-item text-center py-2 text-opac">This month</div>
-                    <x-list-absen 
-                        image="assets/img/user3.jpg" 
-                        name="Silvasaa" 
-                        description="is now available to take your order. tap to
-                                    continue order in your cart." 
-                        time="2 week ago" 
-                    />
+                    @foreach($absens as $month => $monthIzins)
+                        <div class="list-group-item text-center py-2 text-opac">{{ $month }}</div>
+                        @foreach($monthIzins as $absen)
+                            <li class="list-group-item">
+                                <div class="row">
+                                    {{-- <div class="col-auto text-center">
+                                        <i class="bi bi-person"></i>
+                                        <p class="lh-small text-{{ $absen->keterangan == 'sakit' ? 'primary' : ($absen->keterangan == 'cuti' ? 'warning' : 'default') }}">
+                                            <b>{{ $absen->keterangan }}</b>
+                                        </p>
+                                    </div> --}}
+                                    <div class="col align-self-center">
+                                        <p class="lh-small mb-0">
+                                            <span><i class="bi bi-calendar-event"></i></span>
+                                            {{ \Carbon\Carbon::parse($absen->waktu)->setTimezone('Asia/Jakarta')->format('d, F Y - H:i') }}
+                                        </p>
+                                        <p class="small text-opac">{{ $absen->jarak }} meter</p>
+                                    </div>
+                                    <div class="col-auto text-center">
+                                        <div class="avatar avatar-40 coverimg rounded-circle" style="background-image: url('assets/img/user1.jpg');">
+                                            <i class="bi bi-{{ $absen->status == 'disetujui' ? 'check-circle text-success' : ($absen->status == 'tertunda' ? 'dash-circle text-warning' : 'x-circle text-danger') }}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>

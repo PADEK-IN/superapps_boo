@@ -65,7 +65,7 @@
                     <button id="submit-button" type="submit" class="btn btn-default btn-lg w-100" disabled>Absen</button>
                 </div>
             </form>
-            
+
         </div>
     </div>
 
@@ -77,6 +77,73 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
 
     <script language="JavaScript">
+        function showToast(type, title, message) {
+            iziToast[type]({
+                title: title,
+                message: message,
+                position: 'bottomRight'
+            });
+        }
+
+        $(document).ready(function() {
+            // Initialize Webcam
+            Webcam.set({
+                width: 400,
+                height: 300,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
+
+            Webcam.attach('#my_camera');
+
+            $("#my_camera").css({
+                "width": "100%",
+                "margin": "auto"
+            });
+
+            $("video").addClass("img-fluid");
+        });
+
+        function takeSnapshot() {
+            Webcam.snap(function(data_uri) {
+                // Tampilkan preview gambar
+                let img = document.createElement('img');
+                img.src = data_uri;
+                img.className = 'img-fluid';
+                let results = document.getElementById('results');
+                results.innerHTML = '';
+                results.appendChild(img);
+
+                // Simpan data URI ke hidden input field
+                document.querySelector('.image-tag').value = data_uri;
+
+                // Tampilkan output card untuk submit
+                document.getElementById('output-card').style.display = 'block';
+                document.getElementById('retry-button').style.display = 'inline-block';
+                $("form").removeClass("d-none");
+
+                // Set waktu saat ini
+                let now = new Date();
+                document.getElementById('time').innerText = now.toLocaleTimeString();
+                document.getElementById('waktu').value = now.toISOString().split('.')[0].replace('T', ' ');
+
+                // Aktifkan tombol submit
+                document.getElementById('submit-button').disabled = false;
+            });
+        }
+
+        function retrySnapshot() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('results').setAttribute('hidden', true);
+            document.getElementById('output-card').style.display = 'none';
+            document.getElementById('retry-button').style.display = 'none';
+            Webcam.attach('#my_camera');
+            $("form").addClass("d-none");
+        }
+    </script>
+
+
+    {{-- <script language="JavaScript">
         function showToast(type, title, message) {
             iziToast[type]({
                 title: title,
@@ -143,7 +210,6 @@
             return blob;
         }
 
-
         function retrySnapshot() {
             document.getElementById('results').innerHTML = '';
             document.getElementById('results').setAttribute('hidden', true);
@@ -152,7 +218,7 @@
             Webcam.attach('#my_camera');
             $("form").addClass("d-none");
         }
-    </script>
+    </script> --}}
     <script>
                 // Initialize Map
                 let map = L.map('map').setView([0, 0], 13);
@@ -165,7 +231,7 @@
 
                 // let allowedLocation = L.latLng(-1.616122, 103.592451); // Ganti dengan koordinat lokasi yang diizinkan
                 let allowedLocation = L.latLng(-1.639568, 103.605423);
-                let maxDistance = 1000; // dalam meter, misal 50 meter
+                let maxDistance = 1000000; // dalam meter, misal 50 meter
 
                 // Add a marker and circle for the allowed location
                 let allowedMarker = L.marker(allowedLocation).addTo(map)
