@@ -8,12 +8,12 @@
                             <div class="row">
                                 <div class="col-auto">
                                     <figure class="avatar avatar-80 rounded mx-auto">
-                                        <img src="{{ asset('assets/img/profile').'/'.Auth::user()->karyawan->foto }}" alt="">
+                                        <img src="{{ asset('assets/img/profile').'/'. $data->foto }}" alt="">
                                     </figure>
                                 </div>
                                 <div class="col align-self-center">
-                                    <h5 class="mb-0">{{ ucwords(Auth::user()->karyawan->nama) }}</h5>
-                                    <p class="text-opac">{{ Auth::user()->email }}</p>
+                                    <h5 class="mb-0">{{ ucwords($data->nama) }}</h5>
+                                    <p class="text-opac">{{ $data->user->email }}</p>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,26 @@
 
     <div class="row mb-4">
         <div class="col d-grid">
-            <button class="btn btn-default btn-lg shadow-sm">Edit Profile</button>
+            <div class="card card-light shadow-sm">
+                @if ($data->status == 'aktif')
+                    <div class="card-body text-center bg-success rounded">
+                        <h5>Aktif</h5>
+                    </div>
+                @elseif ($data->status == 'cuti')
+                    <div class="card-body text-center bg-primary rounded">
+                        <h5>Cuti</h5>
+                    </div>
+                @elseif ($data->status == 'sakit')
+                    <div class="card-body text-center bg-warning rounded">
+                        <h5>Sakit</h5>
+                    </div>
+                @else
+                    <div class="card-body text-center bg-danger rounded">
+                        <h5>Tidak Aktif</h5>
+                    </div>
+                @endif
+                
+            </div>
         </div>
     </div>
 
@@ -71,65 +90,121 @@
             <h5 class="mb-0">Detail Profile</h5>
         </div>
         <div class="col-auto pe-0">
-            <a class="link text-color-theme" href="{{ url('profile/' . Auth::user()->id). '/edit' }}">Edit Profile <i class="bi bi-chevron-right"></i></a>
+            <a class="link text-color-theme" href="{{ url('profile/edit') }}">Edit Profile <i class="bi bi-chevron-right"></i></a>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
             <div class="card shadow-sm mb-4">
                 <ul class="list-group list-group-flush my-2 bg-none">
+                    {{-- NIK --}}
                     <li class="list-group-item border-0">
                         <div class="row">
                             <div class="col-auto">
                                 <figure class="avatar avatar-50 rounded-circle">
-                                    <img src="assets/img/googlelogo.png" alt="">
+                                    <img src="{{ asset('assets/img/bgshapes.png') }}" alt="">
                                 </figure>
                             </div>
                             <div class="col px-0">
-                                <p>Sr. UX Designer<br><small class="text-opac">GooglesInc</small></p>
-                            </div>
-                            <div class="col-auto text-end">
-                                <p>
-                                    <small class="text-opac">2013-2021</small>
-                                </p>
+                                <p>{{ $data->nik }}<br><small class="text-opac">NIK</small></p>
                             </div>
                         </div>
                     </li>
+                    {{-- Jenis Kelamin --}}
                     <li class="list-group-item border-0">
                         <div class="row">
                             <div class="col-auto">
                                 <figure class="avatar avatar-50 rounded-circle">
-                                    <img src="assets/img/microsoftlogo.png" alt="">
+                                    <img src="{{ asset('assets/img/bgshapes.png') }}" alt="">
                                 </figure>
                             </div>
                             <div class="col px-0">
-                                <p>Sr. UX Designer<br><small class="text-opac">Micro Software</small></p>
-                            </div>
-                            <div class="col-auto text-end">
                                 <p>
-                                    <small class="text-opac">2012-2013</small>
-                                </p>
+                                @if ($data->jenis_kelamin === 'LK')
+                                    Laki - Laki
+                                @else
+                                    Perempuan
+                                @endif
+                                <br>
+                                <small class="text-opac">Jenis Kelamin</small></p>
+                            </div>
+                        </div>
+                    </li>
+                    {{-- Nomer Handphone --}}
+                    <li class="list-group-item border-0">
+                        <div class="row">
+                            <div class="col-auto">
+                                <figure class="avatar avatar-50 rounded-circle">
+                                    <img src="{{ asset('assets/img/bgshapes.png') }}" alt="">
+                                </figure>
+                            </div>
+                            <div class="col px-0">
+                                <p>{{ $data->no_hp }}<br>
+                                <small class="text-opac">Nomer Handphone</small></p>
+                            </div>
+                        </div>
+                    </li>
+                    {{-- Alamat --}}
+                    <li class="list-group-item border-0">
+                        <div class="row">
+                            <div class="col-auto">
+                                <figure class="avatar avatar-50 rounded-circle">
+                                    <img src="{{ asset('assets/img/bgshapes.png') }}" alt="">
+                                </figure>
+                            </div>
+                            <div class="col px-0">
+                                <p>
+                                    @if ($data->alamat == '')
+                                        <span class="text-danger">Alamat Belum di Masukan</span>
+                                    @else
+                                        {{ $data->alamat }}
+                                    @endif
+                                    <br>
+                                <small class="text-opac">Alamat</small></p>
+                            </div>
+                        </div>
+                    </li>
+                    {{-- Provinsi --}}
+                    <li class="list-group-item border-0">
+                        <div class="row">
+                            <div class="col-auto">
+                                <figure class="avatar avatar-50 rounded-circle">
+                                    <img src="{{ asset('assets/img/bgshapes.png') }}" alt="">
+                                </figure>
+                            </div>
+                            <div class="col px-0">
+                            <p>
+                                @if ($data->provinsi == '')
+                                    <span class="text-danger">Provinsi Belum di Pilih</span>
+                                @else
+                                    {{ $data->provinsi }}
+                                @endif
+                                <br>
+                                <small class="text-opac">Provinsi</small></p>
+                            </div>
+                        </div>
+                    </li>
+                    {{-- Jabatan --}}
+                    <li class="list-group-item border-0">
+                        <div class="row">
+                            <div class="col-auto">
+                                <figure class="avatar avatar-50 rounded-circle">
+                                    <img src="{{ asset('assets/img/bgshapes.png') }}" alt="">
+                                </figure>
+                            </div>
+                            <div class="col px-0">
+                            <p>
+                                @if ($data->jabatan == '')
+                                    <span class="text-danger">Jabatan Belum dimasukan</span>
+                                @else
+                                    {{ $data->jabatan }}
+                                @endif
+                                <br>
+                                <small class="text-opac">Jabatan</small></p>
                             </div>
                         </div>
                     </li>
 
-                    <li class="list-group-item border-0">
-                        <div class="row">
-                            <div class="col-auto">
-                                <figure class="avatar avatar-50 rounded-circle">
-                                    <img src="assets/img/applelogo.png" alt="">
-                                </figure>
-                            </div>
-                            <div class="col px-0">
-                                <p>Jr. UX Deigner<br><small class="text-opac">ApplesCorp</small></p>
-                            </div>
-                            <div class="col-auto text-end">
-                                <p>
-                                    <small class="text-opac">2005-2011</small>
-                                </p>
-                            </div>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>
