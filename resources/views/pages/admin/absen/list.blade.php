@@ -15,49 +15,35 @@
                     <table id="datatablesSimple" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tanggal</th>
-                                <th>Jabatan</th>
+                                <th>Posisi</th>
                                 <th>Jarak</th>
-                                <th>Longitude</th>
-                                <th>Latitude</th>
-                                <th>Status</th>
+                                <th>Waktu</th>
+                                <th>Bukti</th>
+                                <th>Status Absen</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Joko Widodo</td>
-                                <td>
-                                    <span class="badge bg-primary">Laki-laki</span>
-                                </td>
-                                <td>22-Januari-2020</td>
-                                <td>Direktur</td>
-                                <td>
-                                    <span class="badge bg-info">At Location</span>
-                                </td>
-                                <td>110.3658812</td>
-                                <td>-7.7925927</td>
-                                <td>
-                                    <span class="badge bg-danger">UnAproved</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Putri Wulandari</td>
-                                <td>
-                                    <span class="badge bg-warning">Perempuan</span>
-                                </td>
-                                <td>22-Januari-2020</td>
-                                <td>Direktur</td>
-                                <td>
-                                    <span class="badge bg-danger">3KM</span>
-                                </td>
-                                <td>110.3658812</td>
-                                <td>-7.7925927</td>
-                                <td>
-                                    <span class="badge bg-success">Aproved</span>
-                                </td>
-                            </tr>
+                            @foreach ($absens as $index => $absen)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $absen->karyawan->nama }}</td>
+                                        <td>{{ $absen->karyawan->jabatan }}</td>
+                                        <td>{{ $absen->jarak }}</td>
+                                        <td>{{ $absen->waktu }}</td>
+                                        <td><img src="{{ asset('assets/img/absen').'/'.$absen->bukti }}" alt="foto" width="30px"></td>
+                                        <td>
+                                            @if ($absen->status == 'disetujui')
+                                            <span class="badge bg-success">{{ ucwords($absen->status) }}</span>
+                                            @elseif($absen->status == 'tertunda')
+                                            <span class="badge bg-warning">{{ ucwords($absen->status) }}</span>
+                                            @else
+                                            <span class="badge bg-danger">{{ ucwords($absen->status) }}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                         </tbody>
                     </table>
                 </div>
