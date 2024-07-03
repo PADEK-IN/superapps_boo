@@ -14,8 +14,11 @@ class Absen extends Model
     protected $fillable = [
         'id_karyawan',
         'bukti',
-        'lokasi',
-        'status',
+        'latitude',
+        'longitude',
+        'jarak',
+        'waktu',
+        'status'
     ];
 
     public function getHashidAttribute()
