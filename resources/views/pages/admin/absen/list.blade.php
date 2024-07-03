@@ -22,6 +22,7 @@
                                 <th>Waktu</th>
                                 <th>Bukti</th>
                                 <th>Status Absen</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,6 +42,9 @@
                                             @else
                                             <span class="badge bg-danger">{{ ucwords($absen->status) }}</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="/admin/absen/detail/{{ $absen->hashid }}" class="btn btn-sm btn-info">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach
