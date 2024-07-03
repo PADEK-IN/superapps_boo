@@ -28,6 +28,12 @@ class AdminKaryawanController extends Controller
         return view('pages.admin.karyawan.pendingList', compact('karyawans'));
     }
 
+    public function detail($id)
+    {
+        $karyawan = Karyawan::findOrFail($id);
+        return view('pages.admin.karyawan.detail', compact('karyawan'));
+    }
+
     public function validate(Request $request)
     {
         // Validasi input
@@ -76,7 +82,7 @@ class AdminKaryawanController extends Controller
     {
         try {
             $id_karyawan = Hashids::decode($id)[0] ?? null;
-            $karyawan = Karyawan::find($id_karyawan);
+            $karyawan = Karyawan::findOrFail($id_karyawan);
             $karyawan->delete();
 
             return redirect()->back()->with('success', 'Karyawan berhasil dihapus.');
