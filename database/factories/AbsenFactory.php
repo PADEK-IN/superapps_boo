@@ -19,7 +19,11 @@ class AbsenFactory extends Factory
         return [
             'id_karyawan'=> 1,
             'bukti' => 'blank.jpg',
-            'lokasi' => '1.111111, 1.111111',
+            'latitude' => '-1.1111111122222222',
+            'longitude' => '1.1111111122222222',
+            'jarak' => '59.111122222222',
+            'waktu' => $this->faker->dateTime(),
+            'status' => 'tertunda',
         ];
     }
 }

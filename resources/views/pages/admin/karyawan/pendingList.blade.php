@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body text-center">
                     <div class="table-responsive">
                         <table id="datatablesSimple" class="table table-striped " style="width:100%">
                             <thead>
@@ -143,12 +143,14 @@
                 contentType: "application/json",
                 data: JSON.stringify({ids}),
                 success: (response) => {
-                    alert(response.status.message);
-                    window.location.reload();
+                    showToast('success', 'Success', `${response.status.message}`);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
                 },
                 error: (response) => {
                     const message = response.responseJSON.status.message;
-                    alert(message);
+                    showToast('error', 'Error', `${message}`);
                 }
             });
         }
