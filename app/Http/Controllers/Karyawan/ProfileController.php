@@ -13,6 +13,6 @@ class ProfileController
 
     public function edit()
     {
-        return view('pages.karyawan.profile.edit', compact('profile.edit'));
+        return view('pages.karyawan.profile.edit');
     }
 }
