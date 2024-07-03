@@ -23,7 +23,8 @@ class AdminAbsenController extends Controller
 
     public function detail($id)
     {
-        $absen = Absen::findOrFail($id);
+        $id_absen = Hashids::decode($id)[0] ?? null;
+        $absen = Absen::findOrFail($id_absen);
         return view('pages.admin.absen.detail', compact('absen'));
     }
 
