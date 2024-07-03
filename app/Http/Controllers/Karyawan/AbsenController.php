@@ -12,7 +12,10 @@ class AbsenController extends Controller
 {
     public function listPage()
     {
-        return view('pages.karyawan.absen.list');
+        $id_karyawan = Auth::user()->karyawan->id;
+        $absens = Absen::where('id_karyawan', $id_karyawan)->get();
+
+        return view('pages.karyawan.absen.list', compact('absens'));
     }
 
     public function createPage()
