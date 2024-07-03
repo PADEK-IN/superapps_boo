@@ -15,6 +15,7 @@
                     <table id="datatablesSimple" class="table table-striped" style="width:100%">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Jenis Kelamin</th>
@@ -25,54 +26,35 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($karyawans as $index => $karyawan)
                             <tr>
-                                <td>4267384249</td>
-                                <td>Joko Widodo</td>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $karyawan->nik }}</td>
+                                <td><a href="/admin/karyawan/detail/{{ $karyawan->hashid }}">{{ $karyawan->nama }}</a></td>
                                 <td>
-                                    <span class="badge bg-primary">Laki-laki</span>
+                                    @if ($karyawan->jenis_kelamin == 'LK')
+                                    <span class="badge bg-primary">{{ $karyawan->jenis_kelamin }}</span>
+                                    @else
+                                    <span class="badge bg-danger">{{ $karyawan->jenis_kelamin }}</span>
+                                    @endif
                                 </td>
-                                <td>08263728123</td>
-                                <td>Direktur</td>
+                                <td>{{ $karyawan->no_hp }}</td>
+                                <td>{{ $karyawan->jabatan }}</td>
                                 <td>
-                                    <span class="badge bg-success">Active</span>
+                                    @if ($karyawan->status == 'aktif')
+                                    <span class="badge bg-success">{{ ucwords($karyawan->status) }}</span>
+                                    @elseif($karyawan->status == 'cuti')
+                                    <span class="badge bg-warning">{{ ucwords($karyawan->status) }}</span>
+                                    @else
+                                    <span class="badge bg-danger">{{ ucwords($karyawan->status) }}</span>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="/admin/karyawan/edit/{{ $karyawan->hashid }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="/admin/karyawan/delete/{{ $karyawan->hashid }}" onclick="return confirm('Apakah Anda yakin ingin menghapus data {{ $karyawan->nama }}?');" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>4267384249</td>
-                                <td>Putri Wulandari</td>
-                                <td>
-                                    <span class="badge bg-warning">Perempuan</span>
-                                </td>
-                                <td>08263728123</td>
-                                <td>Direktur</td>
-                                <td>
-                                    <span class="badge bg-warning">Cuti</span>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4267384249</td>
-                                <td>Putri Wulandari</td>
-                                <td>
-                                    <span class="badge bg-warning">Perempuan</span>
-                                </td>
-                                <td>08263728123</td>
-                                <td>Direktur</td>
-                                <td>
-                                    <span class="badge bg-danger">Keluar</span>
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

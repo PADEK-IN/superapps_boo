@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Karyawan;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('pages.karyawan.profile.edit', [
+        return view('pages.admin.profile.edit', [
             'user' => $request->user(),
         ]);
     }
@@ -35,7 +35,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('pages.karyawan.profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('pages.admin.profile.edit')->with('status', 'profile-updated');
     }
 
     /**
