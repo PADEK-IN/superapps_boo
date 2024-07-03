@@ -14,6 +14,7 @@
                 </div>
                 <div class="card-body text-center">
                     <h2>Data detail karyawan</h2>
+                    <hr>
                     <div class="row">
                         <div class="col-12 col-md-3 mb-4 d-flex justify-content-center align-items-center flex-column">
                             <div class="text-center mb-3">
