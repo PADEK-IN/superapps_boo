@@ -45,6 +45,8 @@
                                     <span class="badge bg-success">{{ ucwords($karyawan->status) }}</span>
                                     @elseif($karyawan->status == 'cuti')
                                     <span class="badge bg-warning">{{ ucwords($karyawan->status) }}</span>
+                                    @elseif($karyawan->status == 'sakit')
+                                    <span class="badge bg-warning">{{ ucwords($karyawan->status) }}</span>
                                     @else
                                     <span class="badge bg-danger">{{ ucwords($karyawan->status) }}</span>
                                     @endif
