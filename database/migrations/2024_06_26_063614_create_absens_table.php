@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('latitude', 20);
             $table->string('longitude', 20);
             $table->string('jarak', 20);
-            $table->timestamp('waktu');
+            $table->timestamp('waktu_masuk');
+            $table->timestamp('waktu_keluar')->nullable();
+            $table->enum('kehadiran', ['tepat waktu', 'terlambat', 'alfa'])->default('alfa');
             $table->enum('status', ['disetujui', 'tertunda', 'ditolak'])->default('tertunda');
             $table->timestamps();
         });
