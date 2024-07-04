@@ -30,7 +30,7 @@
                                         Cuti
                                     </div>
                                 @elseif ($karyawan->status == "sakit")
-                                    <div class="alert alert-info" role="alert">
+                                    <div class="alert alert-warning" role="alert">
                                         Sakit
                                     </div>
                                 @else
@@ -40,7 +40,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="col-12 col-md-9 mb-4">
                             <table class="table table-striped">
                                 <tbody>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </main>
 </x-admin-layout>
