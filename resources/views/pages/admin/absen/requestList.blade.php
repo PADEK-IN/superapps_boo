@@ -27,6 +27,7 @@
                                     <th>Nama</th>
                                     <th>Jarak</th>
                                     <th>Waktu Absen</th>
+                                    <th>Kehardiran</th>
                                     <th>Bukti</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -40,6 +41,7 @@
                                         <td>{{ $absen->karyawan->nama }}</td>
                                         <td>{{ $absen->jarak }}</td>
                                         <td>{{ date('H:i:s', strtotime($absen->waktu_masuk)) }}</td>
+                                        <td>{{ ucwords($absen->kehadiran) }}</td>
                                         <td><img src="{{ asset('assets/img/absen').'/'.$absen->bukti }}" alt="foto" width="30px"></td>
                                         <td>
                                             @if ($absen->status == 'disetujui')
@@ -57,6 +59,7 @@
                                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal"
                                                 data-nama="{{ $absen->karyawan->nama }}"
                                                 data-jarak="{{ $absen->jarak }}"
+                                                data-kehadiran="{{ ucwords($absen->kehadiran) }}"
                                                 data-bukti="{{ asset('assets/img/absen').'/'.$absen->bukti }}">
                                                 Detail
                                             </button>
@@ -75,7 +78,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <h5 id="modalNama"></h5>
-                                    <p id="modalJarak"></p>
+                                    <p style="margin:0; padding:0" id="modalJarak"></p>
+                                    <p id="modalKehadiran"></p>
                                     <img id="modalBukti" src="" alt="foto" width="400px">
                                 </div>
                                 <div class="modal-footer">
@@ -89,7 +93,7 @@
             </div>
         </div>
     </main>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const detailModal = document.getElementById('detailModal');
@@ -97,19 +101,22 @@
                 const button = event.relatedTarget;
                 const nama = button.getAttribute('data-nama');
                 const jarak = button.getAttribute('data-jarak');
+                const kehadiran = button.getAttribute('data-kehadiran');
                 const bukti = button.getAttribute('data-bukti');
-    
+
                 const modalNama = document.getElementById('modalNama');
                 const modalJarak = document.getElementById('modalJarak');
+                const modalKehadiran = document.getElementById('modalKehadiran');
                 const modalBukti = document.getElementById('modalBukti');
-    
+
                 modalNama.textContent = `Nama: ${nama}`;
                 modalJarak.textContent = `Jarak: ${jarak}`;
+                modalKehadiran.textContent = `Status Kehadiran: ${kehadiran}`;
                 modalBukti.src = bukti;
             });
         });
     </script>
-    
+
     <script>
         // Set CSRF token for every AJAX request
         $.ajaxSetup({

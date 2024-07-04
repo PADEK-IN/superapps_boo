@@ -54,7 +54,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row">Jarak</th>
-                                        <td>{{ $absen->jarak }}</td>
+                                        <td>{{ number_format($absen->jarak, 1) }} meter</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Status</th>
@@ -75,8 +75,8 @@
                                     <tr>
                                         <th scope="row">Waktu Keluar</th>
                                         <td>
-                                            @if ($absen->waktu_keluar == '')
-                                                <span class="badge bg-danger">Waktu Keluar belum di input</span>
+                                            @if (!$absen->waktu_keluar)
+                                                <span class="badge bg-danger">Belum absen pulang</span>
                                             @else
                                                 {{ $absen->waktu_keluar }}
                                             @endif

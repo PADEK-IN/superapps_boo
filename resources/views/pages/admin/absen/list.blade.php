@@ -19,8 +19,9 @@
                                 <th>Nama</th>
                                 <th>Posisi</th>
                                 <th>Jarak</th>
-                                <th>Waktu</th>
-                                <th>Bukti</th>
+                                <th>Waktu Masuk</th>
+                                <th>Waktu Keluar</th>
+                                <th>Status Kehadiran</th>
                                 <th>Status Absen</th>
                                 <th>Action</th>
                             </tr>
@@ -31,9 +32,10 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $absen->karyawan->nama }}</td>
                                         <td>{{ $absen->karyawan->jabatan }}</td>
-                                        <td>{{ $absen->jarak }}</td>
-                                        <td>{{ $absen->waktu }}</td>
-                                        <td><img src="{{ asset('assets/img/absen').'/'.$absen->bukti }}" alt="foto" width="30px"></td>
+                                        <td>{{ number_format($absen->jarak, 1) }} m</td>
+                                        <td>{{ $absen->waktu_masuk }}</td>
+                                        <td>{{ $absen->waktu_keluar }}</td>
+                                        <td>{{ ucwords($absen->kehadiran) }}</td>
                                         <td>
                                             @if ($absen->status == 'disetujui')
                                             <span class="badge bg-success">{{ ucwords($absen->status) }}</span>
