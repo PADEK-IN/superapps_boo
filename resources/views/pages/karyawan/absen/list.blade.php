@@ -27,7 +27,13 @@
                                     <div class="col align-self-center">
                                         <p class="lh-small mb-0">
                                             <span><i class="bi bi-calendar-event"></i></span>
-                                            {{ \Carbon\Carbon::parse($absen->waktu_masuk)->format('d, F Y - H:i') }}
+                                            <span>{{ \Carbon\Carbon::parse($absen->waktu_masuk)->format('d, F Y - H:i') }}</span>
+                                            <span class="text-success">In</span>
+                                            @if ($absen->waktu_keluar)
+                                            <span> | </span>
+                                            <span>{{ \Carbon\Carbon::parse($absen->waktu_keluar)->format('H:i') }}</span>
+                                            <span class="text-danger">Out</span>
+                                            @endif
                                         </p>
                                         <p class="small text-opac">{{ $absen->jarak }} meter</p>
                                     </div>

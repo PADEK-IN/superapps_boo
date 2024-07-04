@@ -8,6 +8,7 @@ use App\Models\Karyawan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -31,13 +32,11 @@ class AbsenController extends Controller
         $id_user = Auth::id();
         $id_karyawan = Auth::user()->karyawan->id;
 
-        // Tentukan tanggal hari ini
         $tanggal_hari_ini = Carbon::today('Asia/Jakarta')->format('Y-m-d');
 
-        // Periksa apakah karyawan sudah absen masuk pada hari ini
         $absen_hari_ini = Absen::where('id_karyawan', $id_karyawan)
-            ->whereDate('waktu_masuk', $tanggal_hari_ini)
-            ->exists();
+                                ->whereDate('waktu_masuk', $tanggal_hari_ini)
+                                ->exists();
 
         if ($absen_hari_ini) {
             return redirect()->back()->with('error', 'Anda sudah absen masuk pada hari ini.');
@@ -130,4 +129,36 @@ class AbsenController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function pulang($id)
+    {
+        try {
+            $id_absen = Hashids::decode($id)[0] ?? null;
+
+            $absen = Absen::findOrFail($id_absen);
+
+            // Periksa apakah ada entri absen dengan waktu_keluar pada hari ini
+            $absen_hari_ini = Absen::where('id', $id_absen)
+                                    ->whereNotNull('waktu_keluar')
+                                    ->exists();
+
+            if ($absen_hari_ini) {
+                return redirect()->back()->with('error', 'Anda sudah absen pulang.');
+            }
+
+            // Ambil waktu pulang dari input pengguna dan setel zona waktu ke WIB
+            $waktu_keluar = now()->setTimezone('Asia/Jakarta');
+
+            // Perbarui data absen dengan waktu pulang
+            $absen->update([
+                'waktu_keluar' => $waktu_keluar,
+            ]);
+
+            return redirect()->route('absen')->with('status', 'Absen pulang berhasil disimpan.');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
 }
