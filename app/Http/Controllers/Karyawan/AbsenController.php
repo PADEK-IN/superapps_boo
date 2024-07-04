@@ -123,7 +123,7 @@ class AbsenController extends Controller
             // Simpan data absen ke dalam database
             Absen::create($data);
 
-            return redirect()->route('absen')->with('status', 'Absen berhasil disimpan.'. $waktu. $batas_waktu);
+            return redirect()->route('absen')->with('status', 'Absen berhasil disimpan.');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
