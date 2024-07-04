@@ -12,16 +12,22 @@
                         @foreach($monthIzins as $absen)
                             <li class="list-group-item">
                                 <div class="row">
-                                    {{-- <div class="col-auto text-center">
+                                    <div class="col-1 text-center">
                                         <i class="bi bi-person"></i>
-                                        <p class="lh-small text-{{ $absen->keterangan == 'sakit' ? 'primary' : ($absen->keterangan == 'cuti' ? 'warning' : 'default') }}">
-                                            <b>{{ $absen->keterangan }}</b>
+                                        @if ($absen->kehadiran == 'tepat waktu')
+                                        <p class="lh-small text-success">
+                                        @elseif($absen->kehadiran == 'terlambat')
+                                        <p class="lh-small text-warning">
+                                        @else
+                                        <p class="lh-small text-danger">
+                                        @endif
+                                            <b>{{ ucwords($absen->kehadiran) }}</b>
                                         </p>
-                                    </div> --}}
+                                    </div>
                                     <div class="col align-self-center">
                                         <p class="lh-small mb-0">
                                             <span><i class="bi bi-calendar-event"></i></span>
-                                            {{ \Carbon\Carbon::parse($absen->waktu)->setTimezone('Asia/Jakarta')->format('d, F Y - H:i') }}
+                                            {{ \Carbon\Carbon::parse($absen->waktu_masuk)->format('d, F Y - H:i') }}
                                         </p>
                                         <p class="small text-opac">{{ $absen->jarak }} meter</p>
                                     </div>

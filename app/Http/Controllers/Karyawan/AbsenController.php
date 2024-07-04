@@ -17,7 +17,7 @@ class AbsenController extends Controller
     {
         $id_karyawan = Auth::user()->karyawan->id;
         $absens = Absen::where('id_karyawan', $id_karyawan)
-            ->orderBy('waktu', 'desc')
+            ->orderBy('waktu_masuk', 'desc')
             ->get()
             ->groupBy(function($date) {
                 return \Carbon\Carbon::parse($date->mulai)->format('F Y'); // Mengelompokkan berdasarkan bulan dan tahun
@@ -29,6 +29,20 @@ class AbsenController extends Controller
     public function createPage()
     {
         $id_user = Auth::id();
+        $id_karyawan = Auth::user()->karyawan->id;
+
+        // Tentukan tanggal hari ini
+        $tanggal_hari_ini = Carbon::today('Asia/Jakarta')->format('Y-m-d');
+
+        // Periksa apakah karyawan sudah absen masuk pada hari ini
+        $absen_hari_ini = Absen::where('id_karyawan', $id_karyawan)
+            ->whereDate('waktu_masuk', $tanggal_hari_ini)
+            ->exists();
+
+        if ($absen_hari_ini) {
+            return redirect()->back()->with('error', 'Anda sudah absen masuk pada hari ini.');
+        }
+
         $nama = Karyawan::where('id_user', $id_user)->firstOrFail()->nama;
         return view('pages.karyawan.absen.create', compact('nama'));
     }
@@ -36,11 +50,13 @@ class AbsenController extends Controller
     public function store(Request $request)
     {
         try {
+            $id_karyawan = Auth::user()->karyawan->id;
+
             $request->validate([
                 'latitude' => 'required|string|max:20',
                 'longitude' => 'required|string|max:20',
                 'jarak' => 'required|string|max:20',
-                'waktu' => 'required',
+                'waktu_masuk' => 'required',
             ]);
 
             // Mendekode data base64
@@ -83,22 +99,32 @@ class AbsenController extends Controller
             // Menyimpan file ke folder tujuan
             File::put($filePath, $imageBase64);
 
-            // Konversi waktu dari string ke timestamp
-            $waktu = date('Y-m-d H:i:s', strtotime($request->input('waktu')));
+            // Ambil waktu kehadiran dari input pengguna dan setel zona waktu ke WIB
+            $waktu_masuk = $request->input('waktu_masuk');
+            $waktu = Carbon::parse($waktu_masuk)->setTimezone('Asia/Jakarta');
 
-            $id_karyawan = Auth::user()->karyawan->id;
+            // Tentukan batas waktu kehadiran pada jam 8 pagi WIB
+            $batas_waktu = Carbon::parse($waktu->format('Y-m-d') . ' 08:01:00', 'Asia/Jakarta');
+
+            // Bandingkan waktu kehadiran dengan batas waktu
+            if ($waktu->greaterThan($batas_waktu)) {
+                $status_kehadiran = 'terlambat';
+            } else {
+                $status_kehadiran = 'tepat waktu';
+            }
 
             // Gabungkan data request dengan ID karyawan dan path file gambar
             $data = array_merge($request->all(), [
                 'id_karyawan' => $id_karyawan,
                 'bukti' => $imageName,
-                'waktu' => $waktu,
+                'waktu_masuk' => $waktu,
+                'kehadiran' => $status_kehadiran,
             ]);
 
             // Simpan data absen ke dalam database
             Absen::create($data);
 
-            return redirect()->route('absen')->with('status', 'Absen berhasil disimpan.');
+            return redirect()->route('absen')->with('status', 'Absen berhasil disimpan.'. $waktu. $batas_waktu);
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
