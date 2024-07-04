@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Izin;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
 
 class AdminIzinController extends Controller
@@ -57,7 +59,18 @@ class AdminIzinController extends Controller
 
             // Update status Izin karyawan berdasarkan id
             if($request->input('need') == 'disetujui') {
-                Izin::whereIn('id', $ids)->update(['status' => 'disetujui']);
+                DB::transaction(function () use ($ids) {
+                    // Update status di tabel izin
+                    Izin::whereIn('id', $ids)->update(['status' => 'disetujui']);
+
+                    // Ambil semua data izin yang telah diperbarui
+                    $izins = Izin::whereIn('id', $ids)->get();
+
+                    // Iterasi melalui setiap izin untuk mengupdate tabel karyawan
+                    foreach ($izins as $izin) {
+                        Karyawan::where('id', $izin->id_karyawan)->update(['status' => $izin->keterangan]);
+                    }
+                });
             } else {
                 Izin::whereIn('id', $ids)->update(['status' => 'ditolak']);
             }
