@@ -11,7 +11,7 @@ class ProfileController
     public function profile()
     {
         $id = Auth::id();
-        $data = Karyawan::findOrFail($id);
+        $data = Karyawan::where('id_user', $id)->first();
         return view('pages.karyawan.profile.index', compact('data'));
     }
 
