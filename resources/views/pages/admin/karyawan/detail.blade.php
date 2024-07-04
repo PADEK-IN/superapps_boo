@@ -23,19 +23,19 @@
                             <div class="w-100">
                                 @if ($karyawan->status == "aktif")
                                     <div class="alert alert-success" role="alert">
-                                        Aktif
+                                        <b>Aktif</b>
                                     </div>
                                 @elseif ($karyawan->status == "cuti")
                                     <div class="alert alert-warning" role="alert">
-                                        Cuti
+                                        <b>Cuti</b>
                                     </div>
                                 @elseif ($karyawan->status == "sakit")
                                     <div class="alert alert-warning" role="alert">
-                                        Sakit
+                                        <b>Sakit</b>
                                     </div>
                                 @else
                                     <div class="alert alert-danger" role="alert">
-                                        Tidak Aktif
+                                        <b>Tidak Aktif</b>
                                     </div>
                                 @endif
                             </div>
