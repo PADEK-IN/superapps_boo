@@ -17,7 +17,9 @@ class Absen extends Model
         'latitude',
         'longitude',
         'jarak',
-        'waktu',
+        'waktu_masuk',
+        'waktu_keluar',
+        'kehadiran',
         'status'
     ];
 
