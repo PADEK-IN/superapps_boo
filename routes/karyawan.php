@@ -13,6 +13,7 @@ Route::middleware(['auth', 'verified', isValidKaryawan::class])->group(function 
     Route::get('/absen', [AbsenController::class, 'listPage'])->name('absen');
     Route::get('/absen/create', [AbsenController::class, 'createPage'])->name('absen.create');
     Route::post('/absen/store', [AbsenController::class, 'store'])->name('absen.store');
+    Route::get('/absen/pulang/{id}', [AbsenController::class, 'pulang'])->name('absen.pulang');
 
     Route::get('/izin', [IzinController::class, 'listPage'])->name('izin');
     Route::get('/izin/create', [IzinController::class, 'createPage'])->name('izin.create');

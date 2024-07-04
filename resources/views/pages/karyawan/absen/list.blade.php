@@ -1,6 +1,6 @@
 <x-karyawan-layout>
     <h3 class="mb-2 text-center">List History Absensi</h3>
-    <a href="/absen/create" class="btn-login btn btn-lg btn-default shadow-sm mb-5">Buat Absen</a>
+    <a href="/absen/create" class="btn btn-login btn-lg btn-success shadow-sm mb-5">Absen Masuk</a>
     <!-- main page content -->
     <div class="main-container container top-20">
         <!-- Chat list   -->
@@ -32,6 +32,9 @@
                                         <p class="small text-opac">{{ $absen->jarak }} meter</p>
                                     </div>
                                     <div class="col-auto text-center">
+                                        @if (!$absen->waktu_keluar)
+                                            <a href="/absen/pulang/{{ $absen->hashid }}" class="btn btn-sm btn-info">Absen Pulang</a>
+                                        @endif
                                         <div class="avatar avatar-40 coverimg rounded-circle" style="background-image: url('assets/img/user1.jpg');">
                                             <i class="bi bi-{{ $absen->status == 'disetujui' ? 'check-circle text-success' : ($absen->status == 'tertunda' ? 'dash-circle text-warning' : 'x-circle text-danger') }}"></i>
                                         </div>
