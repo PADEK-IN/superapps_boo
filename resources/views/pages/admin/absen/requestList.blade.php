@@ -11,7 +11,7 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <span><i class="fas fa-table me-1"></i>Tabel Request Absensi</span>
                         <div class="d-flex justify-content-end gap-2">
-                            <span class=" pt-1"><input type="checkbox" id="check-all"><label for="check-all" class="px-2">Check all</label></span>
+                            <span class="pt-1"><input type="checkbox" id="check-all"><label for="check-all" class="px-2">Check all</label></span>
                             <button class="btn btn-sm btn-success" onclick="updateValidasiCheck('disetujui')">Terima</button>
                             <button class="btn btn-sm btn-danger" onclick="updateValidasiCheck('ditolak')">Tolak</button>
                         </div>
@@ -26,7 +26,7 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Jarak</th>
-                                    <th>Waktu</th>
+                                    <th>Waktu Absen</th>
                                     <th>Bukti</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -39,7 +39,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $absen->karyawan->nama }}</td>
                                         <td>{{ $absen->jarak }}</td>
-                                        <td>{{ $absen->waktu }}</td>
+                                        <td>{{ date('H:i:s', strtotime($absen->waktu_masuk)) }}</td>
                                         <td><img src="{{ asset('assets/img/absen').'/'.$absen->bukti }}" alt="foto" width="30px"></td>
                                         <td>
                                             @if ($absen->status == 'disetujui')
@@ -53,16 +53,63 @@
                                         <td>
                                             <button class="btn btn-sm btn-success" onclick="updateValidasi('{{ $absen->hashid }}', 'disetujui')">Terima</button>
                                             <button class="btn btn-sm btn-danger" onclick="updateValidasi('{{ $absen->hashid }}', 'ditolak')">Tolak</button>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal"
+                                                data-nama="{{ $absen->karyawan->nama }}"
+                                                data-jarak="{{ $absen->jarak }}"
+                                                data-bukti="{{ asset('assets/img/absen').'/'.$absen->bukti }}">
+                                                Detail
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <!-- Modal -->
+                        <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="detailModalLabel">Detail Absen</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h5 id="modalNama"></h5>
+                                    <p id="modalJarak"></p>
+                                    <img id="modalBukti" src="" alt="foto" width="400px">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const detailModal = document.getElementById('detailModal');
+            detailModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const nama = button.getAttribute('data-nama');
+                const jarak = button.getAttribute('data-jarak');
+                const bukti = button.getAttribute('data-bukti');
+    
+                const modalNama = document.getElementById('modalNama');
+                const modalJarak = document.getElementById('modalJarak');
+                const modalBukti = document.getElementById('modalBukti');
+    
+                modalNama.textContent = `Nama: ${nama}`;
+                modalJarak.textContent = `Jarak: ${jarak}`;
+                modalBukti.src = bukti;
+            });
+        });
+    </script>
+    
     <script>
         // Set CSRF token for every AJAX request
         $.ajaxSetup({
