@@ -110,6 +110,26 @@
                             </div>
                         </div>
                     </li>
+                    {{-- Cabang --}}
+                    <li class="list-group-item border-0">
+                        <div class="row">
+                            <div class="col-auto">
+                                <figure class="avatar avatar-50 rounded-circle">
+                                    <img src="{{ asset('assets/img/bgshapes.png') }}" alt="">
+                                </figure>
+                            </div>
+                            <div class="col px-0">
+                                <p>
+                                    @if ($data->cabang == '')
+                                        <span class="text-danger">Cabang Belum di Masukan</span>
+                                    @else
+                                        {{ $data->cabang }}
+                                    @endif
+                                    <br>
+                                <small class="text-opac">Cabang</small></p>
+                            </div>
+                        </div>
+                    </li>
                     {{-- Jenis Kelamin --}}
                     <li class="list-group-item border-0">
                         <div class="row">
