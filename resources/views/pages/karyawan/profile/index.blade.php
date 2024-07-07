@@ -30,7 +30,7 @@
                                         </div>
                                         <div class="col ps-0 align-self-center">
                                             <span class="small text-opac mb-0">Total Absen</span>
-                                            <p class="mb-1">521 Kali</p>
+                                            <p class="mb-1">{{ $jumlahAbsen }} Kali</p>
                                         </div>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col ps-0 align-self-center">
                                             <span class="small text-opac mb-0">Total Izin</span>
-                                            <p class="mb-1">62 Kali</p>
+                                            <p class="mb-1">{{ $jumlahIzin }} Kali</p>
                                         </div>
                                     </div>
                                 </div>
