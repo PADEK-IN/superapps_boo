@@ -35,7 +35,7 @@
                                             <span class="text-danger">Out</span>
                                             @endif
                                         </p>
-                                        <p class="small text-opac">{{ $absen->jarak }} meter</p>
+                                        <p class="small text-opac">{{ number_format($absen->jarak, 1) }} meter</p>
                                     </div>
                                     <div class="col-auto text-center">
                                         @if (!$absen->waktu_keluar)
