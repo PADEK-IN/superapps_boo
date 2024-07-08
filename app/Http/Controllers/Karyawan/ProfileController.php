@@ -33,7 +33,6 @@ class ProfileController
     public function update(Request $request): RedirectResponse
     {
         try {
-            // return redirect()->back()->with('error', 'Anda sudah absen pulang.');
             $request->validate([
                 'nik' => 'required|string|max:255',
                 'nama' => 'required|string|max:255',
