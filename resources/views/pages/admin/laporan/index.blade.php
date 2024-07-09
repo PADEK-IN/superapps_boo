@@ -11,25 +11,13 @@
                     <div class="card-body">
                         <div class="container w-full not-print">
                             <h5>Periode:</h5>
-                            <form action="{{ url('admin/laporan') }}" method="POST" class="d-flex gap-2">
+                            <form action="{{ url('admin/laporan') }}" method="POST" class="d-flex gap-4">
                                 @csrf
-                                <label for="month" class="pt-1">Bulan:</label>
-                                <select name="month" id="month" class="form-control">
-                                    @foreach(range(1, 12) as $m)
-                                        <option value="{{ $m }}" {{ $m == (old('month') ?? date('n')) ? 'selected' : '' }}>
-                                            {{ date('F', mktime(0, 0, 0, $m, 10)) }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label for="start_date" class="pt-1" style="white-space: nowrap; font-size: 0.875rem;">Mulai Tanggal:</label>
+                                <input type="date" name="start_date" id="start_date" class="form-control form-control-sm" style="font-size: 0.875rem;" value="{{ old('start_date') ?? date('Y-m-d') }}">
 
-                                <label for="year" class="pt-1">Tahun:</label>
-                                <select name="year" id="year" class="form-control">
-                                    @foreach(range(2020, date('Y')) as $y)
-                                        <option value="{{ $y }}" {{ $y == (old('year') ?? date('Y')) ? 'selected' : '' }}>
-                                            {{ $y }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label for="end_date" class="pt-1" style="white-space: nowrap; font-size: 0.875rem;">Sampai Tanggal:</label>
+                                <input type="date" name="end_date" id="end_date" class="form-control form-control-sm" style="font-size: 0.875rem;" value="{{ old('end_date') ?? date('Y-m-d') }}">
 
                                 <button type="submit" class="btn btn-sm btn-primary">Filter</button>
                             </form>
@@ -41,18 +29,22 @@
                             <button class="btn btn-sm btn-warning not-print" onclick="window.print()">Print</button>
                         </div>
                         <div class="text-center" id="contentPrint">
-                            <h2>Laporan Kehadiran Karyawan Periode {{ date('F', mktime(0, 0, 0, $month, 10)) }} {{ $year }}</h2>
+                            <h2>Laporan Kehadiran Karyawan Periode {{ date('d', strtotime($start_date)) }} {{ date('F', strtotime($start_date)) }} - {{ date('d', strtotime($end_date)) }} {{ date('F', strtotime($end_date)) }} {{ date('Y', strtotime($end_date)) }}</h2>
                             <hr style="margin-bottom: 30px;">
                             <table class="table table-bordered" width="100%">
                                 <thead>
                                     <tr>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">No</th>
                                         <th rowspan="2" style="vertical-align: middle; text-align: center;">Nama</th>
-                                        <th colspan="{{ \Carbon\Carbon::create($year, $month)->daysInMonth }}" style="text-align: center;">Tanggal</th>
+                                        <th colspan="{{ \Carbon\Carbon::parse($start_date)->diffInDays(\Carbon\Carbon::parse($end_date)) + 1 }}" style="text-align: center;">Tanggal</th>
                                     </tr>
                                     <tr>
-                                        @for($day = 1; $day <= \Carbon\Carbon::create($year, $month)->daysInMonth; $day++)
-                                            <th style="text-align: center;">{{ $day }}</th>
+                                        @php
+                                            $startDate = \Carbon\Carbon::parse($start_date);
+                                            $endDate = \Carbon\Carbon::parse($end_date);
+                                        @endphp
+                                        @for($date = $startDate; $date->lte($endDate); $date->addDay())
+                                            <th style="text-align: center;">{{ $date->format('d') }}</th>
                                         @endfor
                                     </tr>
                                 </thead>
@@ -61,9 +53,13 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $data['nama'] }}</td>
-                                        @foreach($data['days'] as $day => $time)
-                                            <td>{{ $time }}</td>
-                                        @endforeach
+                                        @php
+                                            $startDate = \Carbon\Carbon::parse($start_date);
+                                            $endDate = \Carbon\Carbon::parse($end_date);
+                                        @endphp
+                                        @for($date = $startDate; $date->lte($endDate); $date->addDay())
+                                            <td>{{ $data['days'][$date->format('Y-m-d')] }}</td>
+                                        @endfor
                                     </tr>
                                 </tbody>
                                 @endforeach
