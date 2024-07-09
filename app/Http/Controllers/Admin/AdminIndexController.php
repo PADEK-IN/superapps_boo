@@ -16,9 +16,9 @@ class AdminIndexController extends Controller
         // total karyawan aktif
         $karyawanAktif = Karyawan::where('status', 'aktif')->count();
         // total karyawan izin sakit
-        $karyawanSakit = Izin::where('keterangan', 'sakit')->count();
+        $karyawanSakit = Karyawan::where('status', 'sakit')->count();
         // total karyawan izin cuti
-        $karyawanCuti = Izin::where('keterangan', 'cuti')->count();
+        $karyawanCuti = Karyawan::where('status', 'cuti')->count();
 
         $count = [
             'karyawan_aktif' => $karyawanAktif,
