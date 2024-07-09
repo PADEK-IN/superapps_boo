@@ -104,10 +104,14 @@
                             </a>
                             <div class="collapse" id="perizinan-sidebar" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/admin/izin">Karyawan Izin</a>
-                                    <a class="nav-link" href="/admin/izin/request">Request Izin</a>
-                                </nav>
+                                <a class="nav-link" href="/admin/izin">Karyawan Izin</a>
+                                <a class="nav-link" href="/admin/izin/request">Request Izin</a>
+                            </nav>
                             </div>
+                            <a class="nav-link" href="/admin/laporan">
+                                <div class="sb-nav-link-icon"><i class="fas fa-reports"></i></div>
+                                Laporan Absensi
+                            </a>
                         </div>
                     </div>
                 </nav>

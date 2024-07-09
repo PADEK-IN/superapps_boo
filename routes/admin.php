@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\AdminKaryawanController;
 Route::prefix('admin')->middleware(['auth', 'verified', isValidAdmin::class])->group(function () {
     Route::get('/dashboard', [AdminIndexController::class, 'index'])->name('admin.dashboard');
 
+    Route::get('/laporan', [AdminIndexController::class, 'laporanPage'])->name('admin.laporan');
+    Route::post('/laporan', [AdminIndexController::class, 'laporan'])->name('admin.laporan');
+
     Route::get('/karyawan', [AdminKaryawanController::class, 'listPage'])->name('admin.karyawan');
     Route::get('/karyawan/pending', [AdminKaryawanController::class, 'pendingPage'])->name('admin.karyawan.pending');
     Route::get('/karyawan/detail/{id}', [AdminKaryawanController::class, 'detail'])->name('admin.karyawan.detail');
