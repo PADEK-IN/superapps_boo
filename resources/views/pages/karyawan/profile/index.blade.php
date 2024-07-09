@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div class="row mb-4">
+    {{-- <div class="row mb-4">
         <div class="col d-grid">
             <div class="card card-light shadow-sm">
                 @if ($data->status == 'aktif')
@@ -82,7 +82,7 @@
                 
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- experince -->
     <div class="row mb-3">
