@@ -10,9 +10,16 @@
                 <div class="col-xl-12 col-md-12">
                     <div class="card-body">
                         <div class="container w-full not-print">
-                            <h5>Periode:</h5>
                             <form action="{{ url('admin/laporan') }}" method="POST" class="d-flex gap-4">
                                 @csrf
+                                <label for="karyawan" class="pt-1" style="white-space: nowrap; font-size: 0.875rem;">Karyawan</label>
+                                <select name="karyawan" id="karyawan" class="form-control form-control-sm" style="font-size: 0.875rem;">
+                                    <option value="">Semua Karyawan</option>
+                                    @foreach($karyawans as $karyawan)
+                                        <option value="{{ $karyawan->hashid }}" {{ old('karyawan') == $karyawan->hashid ? 'selected' : '' }}>{{ $karyawan->nama }}</option>
+                                    @endforeach
+                                </select>
+
                                 <label for="start_date" class="pt-1" style="white-space: nowrap; font-size: 0.875rem;">Mulai Tanggal:</label>
                                 <input type="date" name="start_date" id="start_date" class="form-control form-control-sm" style="font-size: 0.875rem;" value="{{ old('start_date') ?? date('Y-m-d') }}">
 
@@ -34,8 +41,8 @@
                             <table class="table table-bordered" width="100%">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">No</th>
-                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">Nama</th>
+                                        <th rowspan="2" style="vertical-align: middle; text-align: center; width: 50px;">No</th>
+                                        <th rowspan="2" style="vertical-align: middle; text-align: center; width: 200px;">Nama</th>
                                         <th colspan="{{ \Carbon\Carbon::parse($start_date)->diffInDays(\Carbon\Carbon::parse($end_date)) + 1 }}" style="text-align: center;">Tanggal</th>
                                     </tr>
                                     <tr>

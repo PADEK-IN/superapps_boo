@@ -8,6 +8,7 @@ use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Routing\Controller;
+use Vinkla\Hashids\Facades\Hashids;
 
 class AdminIndexController extends Controller
 {
@@ -31,7 +32,8 @@ class AdminIndexController extends Controller
 
     public function laporanPage(Request $request)
     {
-       return view('pages.admin.laporan.index');
+        $karyawans = Karyawan::all();
+        return view('pages.admin.laporan.index', compact('karyawans'));
     }
 
     public function laporan(Request $request)
@@ -39,9 +41,11 @@ class AdminIndexController extends Controller
         // Ambil tanggal awal dan tanggal akhir dari request
         $start_date = $request->input('start_date');
         $end_date = $request->input('end_date');
+        $karyawan = $request->input('karyawan');
+        $id_karyawan = $karyawan ? Hashids::decode($karyawan)[0] : null;
 
         // Dapatkan semua karyawan
-        $employees = Karyawan::all();
+        $employees = $karyawan ? Karyawan::where('id', $id_karyawan)->get() : Karyawan::all();
 
         // Buat array untuk menyimpan absensi per hari per karyawan
         $absens = [];
@@ -70,7 +74,8 @@ class AdminIndexController extends Controller
             }
         }
 
-        return view('pages.admin.laporan.index', compact('absens', 'start_date', 'end_date'));
+        $karyawans = Karyawan::all();
+        return view('pages.admin.laporan.index', compact('absens', 'start_date', 'end_date', 'karyawans'));
     }
 
 }
