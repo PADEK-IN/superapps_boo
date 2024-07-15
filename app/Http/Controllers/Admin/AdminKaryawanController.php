@@ -50,7 +50,7 @@ class AdminKaryawanController extends Controller
                 'nama' => 'required|string|max:255',
                 'email' => 'required|string|max:255',
                 'no_hp' => 'required|string|max:15',
-                'jenis_kelamin' => 'required|string|in:LK,PR',
+                'jenis_kelamin' => 'required|string',
                 'cabang' => 'nullable|string|max:255',
                 'alamat' => 'nullable|string|max:255',
                 'provinsi' => 'nullable|string|max:255',
@@ -74,7 +74,9 @@ class AdminKaryawanController extends Controller
             ]);
             $karyawan->update($data);
 
-            return redirect()->route('admin.karyawan')->with('success', 'Data karyawan berhasil diubah.');
+            return redirect()->route('admin.karyawan.edit', $id)->with('success', 'Data karyawan berhasil diubah.');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Data karyawan tidak ditemukan.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat mengubah data karyawan.');
         }

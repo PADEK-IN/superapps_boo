@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('admin.karyawan.update', $karyawan->id) }}" enctype="multipart/form-data">
+<form method="post" action="{{ route('admin.karyawan.update', $karyawan->hashid) }}" enctype="multipart/form-data">
     @csrf
     @method('patch')
 
@@ -91,8 +91,12 @@
                     <tr>
                         <th scope="row">Cabang</th>
                         <td>
-                            <input type="text" name="cabang" class="form-control" value="{{ $karyawan->cabang }}" id="cabang"
-                                    placeholder="Cabang">
+                            <select name="cabang" class="form-control" id="cabang">
+                                <option {{ !$karyawan->cabang?'Selected':'' }} disabled>Pilih Cabang</option>
+                                <option value="jambi alam barajo" {{ $karyawan->cabang == 'jambi alam barajo'?'Selected':'' }}>Jambi Alam Barajo</option>
+                                <option value="jambi jelutung" {{ $karyawan->cabang == 'jambi jelutung'?'Selected':'' }}>Jambi Jelutung</option>
+                                <option value="jambi sortation" {{ $karyawan->cabang == 'jambi sortation'?'Selected':'' }}>Jambi Sortation</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
