@@ -32,6 +32,13 @@
             <table class="table table-striped">
                 <tbody>
                     <tr>
+                        <th scope="row">Email</th>
+                        <td>
+                            <input type="email" name="email" class="form-control" value="{{ $karyawan->user->email }}" id="email"
+                                    placeholder="Email">
+                        </td>
+                    </tr>
+                    <tr>
                         <th scope="row">NIK</th>
                         <td>
                             <input type="text" name="nik" class="form-control" value="{{ $karyawan->nik }}" id="nik" placeholder="NIK">
@@ -44,17 +51,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Email</th>
+                        <th scope="row">Jenis Kelamin</th>
                         <td>
-                            <input type="email" name="email" class="form-control" value="{{ $karyawan->user->email }}" id="email"
-                                    placeholder="Email">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Jabatan</th>
-                        <td>
-                            <input type="text" name="jabatan" class="form-control" value="{{ $karyawan->jabatan }}" id="jabatan"
-                                    placeholder="Jabatan">
+                            <select name="jenis_kelamin" class="form-control" id="jenis_kelamin">
+                                <option disabled>Pilih Jenis Kelamin</option>
+                                <option value="LK" {{ $karyawan->jenis_kelamin == 'LK'?'Selected':'' }}>Laki-laki</option>
+                                <option value="PR" {{ $karyawan->jenis_kelamin == 'PR'?'Selected':'' }}>Perempuan</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -78,11 +81,32 @@
                                     placeholder="Alamat">
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row">Jabatan</th>
+                        <td>
+                            <input type="text" name="jabatan" class="form-control" value="{{ $karyawan->jabatan }}" id="jabatan"
+                                    placeholder="Jabatan">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cabang</th>
+                        <td>
+                            <input type="text" name="cabang" class="form-control" value="{{ $karyawan->cabang }}" id="cabang"
+                                    placeholder="Cabang">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Foto Profile</th>
+                        <td>
+                            <input type="file" name="foto" class="form-control" id="foto">
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="col-12 text-center">
         <button class="btn btn-success" type="submit">Update</button>
+        <button class="btn btn-warning" type="button" onclick="window.location.href='/admin/karyawan'">Kembali</button>
     </div>
 </form>
