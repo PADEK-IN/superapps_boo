@@ -66,8 +66,20 @@ class AdminIndexController extends Controller
                     ->whereDate('waktu_masuk', $date)
                     ->first();
 
+                // Find the leave record for the current employee and date
+                $izin = Izin::where('id_karyawan', $employee->id)
+                    ->whereDate('mulai', '<=', $date)
+                    ->whereDate('selesai', '>=', $date)
+                    ->first();
+
                 // Store the check-in time or 'N/A' if not found
-                $absens[$employee->id]['days'][$currentDate->format('Y-m-d')] = $absen ? Carbon::parse($absen->waktu_masuk)->format('H:i') : '-';
+                if ($absen) {
+                    $absens[$employee->id]['days'][$currentDate->format('Y-m-d')] = Carbon::parse($absen->waktu_masuk)->format('H:i');
+                } elseif ($izin) {
+                    $absens[$employee->id]['days'][$currentDate->format('Y-m-d')] = $izin->keterangan;
+                } else {
+                    $absens[$employee->id]['days'][$currentDate->format('Y-m-d')] = '-';
+                }
 
                 // Move to the next day
                 $currentDate->addDay();
