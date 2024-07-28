@@ -63,14 +63,16 @@ class AdminIndexController extends Controller
 
                 // Find the attendance record for the current employee and date
                 $absen = Absen::where('id_karyawan', $employee->id)
-                    ->whereDate('waktu_masuk', $date)
-                    ->first();
+                            ->where('status', 'disetujui')
+                            ->whereDate('waktu_masuk', $date)
+                            ->first();
 
                 // Find the leave record for the current employee and date
                 $izin = Izin::where('id_karyawan', $employee->id)
-                    ->whereDate('mulai', '<=', $date)
-                    ->whereDate('selesai', '>=', $date)
-                    ->first();
+                            ->where('status', 'disetujui')
+                            ->whereDate('mulai', '<=', $date)
+                            ->whereDate('selesai', '>=', $date)
+                            ->first();
 
                 // Store the check-in time or 'N/A' if not found
                 if ($absen) {
