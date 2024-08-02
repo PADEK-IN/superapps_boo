@@ -9,7 +9,7 @@ steps:
   entrypoint: 'gcloud'
   args: ['run', 'deploy', 'superaps_boo',
          '--image', 'gcr.io/$PROJECT_ID/superaps_boo',
-         '--region', 'us-central1',
+         '--region', 'asia-southeast1',
          '--platform', 'managed',
          '--allow-unauthenticated']
 
