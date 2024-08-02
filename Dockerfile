@@ -20,19 +20,24 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Install Node.js dan NPM
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # Set working directory
 WORKDIR /var/www
 
-# Copy file aplikasi Laravel ke container
+# Copy application files
 COPY . .
 
-# Install dependensi Composer
+# Install Composer dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-# Copy file entri
-COPY ./docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Install NPM dependencies
+RUN npm install && npm run prod
 
-# Expose port 9000 dan instruksikan container untuk menjalankan PHP-FPM
-EXPOSE 9000
-CMD ["/entrypoint.sh"]
+# Expose port 8080
+EXPOSE 8080
+
+# Set entrypoint
+CMD ["sh", "-c", "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8080"]
