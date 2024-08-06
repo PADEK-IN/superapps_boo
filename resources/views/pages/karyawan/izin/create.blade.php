@@ -21,7 +21,7 @@
                             <select class="form-control" id="keterangan" name="keterangan" required>
                                 <option disabled {{ old('keterangan') ? '' : 'selected' }}>Pilih Keterangan</option>
                                 <option value="sakit" {{ old('keterangan') == 'sakit' ? 'selected' : '' }}>Sakit</option>
-                                <option value="cuti" {{ old('keterangan') == 'cuti' ? 'selected' : '' }}>Cuti</option>
+                                <option value="cuti/izin" {{ old('keterangan') == 'cuti/izin' ? 'selected' : '' }}>Cuti / Izin</option>
                             </select>
                             <label class="form-control-label" for="keterangan">Keterangan</label>
                         </div>
